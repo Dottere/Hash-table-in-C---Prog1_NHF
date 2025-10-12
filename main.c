@@ -1,46 +1,47 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <stdlib.h>
 
 #include <wchar.h>
 #include <locale.h>
 
-#define FNV_OFFSET 0x811C9DC5
-#define FNV_PRIME 0x01000193
+#define FNV_OFFSET 2166136261u
+#define FNV_PRIME 16777619u
 
-typedef struct {
-    const unsigned char *data;
-    size_t len;
-}hashInput;
+uint32_t FNV1a(const wchar_t *);
 
-// Fowler-Noll-Vo-1a hash function
-uint32_t FNV1a(hashInput);
-hashInput get_bytes(const char *);
-
-int main(int argc, char **argv) {
-    setlocale(LC_ALL, "");
+int main(void) {
+    setlocale(LC_ALL, "en_US.UTF-8");
 
     wchar_t test[99];
+    wscanf(L"%ls", test);
 
-    while (wscanf(L"%ls", test) != EOF) {
-        wprintf(L"%ls FNV1a hash-je: %" PRIu32 "\n", test, FNV1a(get_bytes(test)));
+    wprintf(L"The FNV1a hash of %ls is: %" PRIu32 "\n", test, FNV1a(test));
 
-    }
 
     return 0;
 }
 
-uint32_t FNV1a(const hashInput input) {
+uint32_t FNV1a(const wchar_t *str) {
+    const size_t size = wcstombs(NULL, str, 0);
+    if (size == (size_t)-1){
+        return 1;
+    }
+
+    char *utf8 = malloc(size+1);
+    if (!utf8) return 1;
+
+    wcstombs(utf8, str, size + 1);
+
     uint32_t hash = FNV_OFFSET;
-    for (size_t i = 0; i < input.len; i++) {
-        hash ^= input.data[i];
+
+    for (size_t i = 0; i < size; i++) {
+        hash ^= (uint8_t)utf8[i];
         hash *= FNV_PRIME;
     }
+    free(utf8);
     return hash;
 }
 
-hashInput get_bytes(const char *str) {
-    const hashInput output = {.data = (const unsigned char*)str, .len = strlen(str)};
-    return output;
-}
+
