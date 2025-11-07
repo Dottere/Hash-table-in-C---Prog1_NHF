@@ -3,16 +3,19 @@
 //
 
 #include "headers/ht.h"
+#include <stdarg.h>
 
+//Takes in how many elements to hold initially and returns a hash table with that size
+Alkalmazott *htinit(size_t initSize) {
+    Alkalmazott *ht = (Alkalmazott *)malloc(sizeof(Alkalmazott) * initSize);
+    ht[0].kov = &ht;
 
+    return ht;
+}
 
-//insert into hash table
-extern int htinsert(const wchar_t *str, uint32_t *ht) {
-    for (int i = 0; i < sizeof(ht) / sizeof(wchar_t); i++) {
-        if (ht[FNV1a(str) % sizeof(ht)/sizeof(wchar_t)] == 0){
-            wcscpy(ht[FNV1a(str)], str);
-            return 0;
-        }
+void htinsert(Alkalmazott *ht, Alkalmazott alkalmazott) {
+    int nextFreeIndex = 0;
+    while (ht->kov != NULL) {
+        nextFreeIndex++;
     }
-    return 1;
 }

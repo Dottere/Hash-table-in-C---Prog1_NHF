@@ -8,11 +8,10 @@
 //#include "headers/ht.h"
 #include "headers/fnv1a.h"
 #include "headers/datastructs.h"
+#include "headers/ht.h"
 
 #define FNV_OFFSET 2166136261u
 #define FNV_PRIME 16777619u
-
-int htinsert(const wchar_t*, uint32_t *);
 
 int main(void) {
     setlocale(LC_ALL, "en_US.UTF-8");

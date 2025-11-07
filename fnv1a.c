@@ -11,6 +11,9 @@ typedef struct {
 
 utf8_size_and_str *utf8_conv(const wchar_t *);
 
+/*
+Expects a stream of bytes that gets hashed into a single 32 bit integer
+ */
 extern uint32_t FNV1a(const wchar_t *str) {
 
     utf8_size_and_str *utf8 = utf8_conv(str);
@@ -38,6 +41,7 @@ extern uint32_t FNV1a(const wchar_t *str) {
 
     return hash;
 }
+
 
 utf8_size_and_str *utf8_conv(const wchar_t *str) {
     const size_t size = wcstombs(NULL, str, 0);
