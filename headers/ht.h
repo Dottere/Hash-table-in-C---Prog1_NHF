@@ -11,8 +11,9 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <wchar.h>
+#include <inttypes.h>
 
-Alkalmazott *htinit(size_t);
-void htinsert(Alkalmazott *, Alkalmazott);
+HashTable *htinit(size_t);
+void htinsert(HashTable *, Alkalmazott *, size_t);
 
 #endif //PROGRAMMING1_NAGYHF_HT_H

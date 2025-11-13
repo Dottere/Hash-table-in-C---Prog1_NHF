@@ -1,0 +1,11 @@
+id,nev,szul_datum,nem,lakhely,email,telefon,szemelyi_szam,beosztas,reszleg,felettes,munkakezdet,munkavege,munkarend,bankszamla,fizetes
+E001,Kovács Anna,1990-04-12,nő,Budapest,anna.kovacs@example.com,+36301234567,123456AB,Projektmenedzser,Fejlesztés,Nagy Péter,2018-06-01,NULL,Teljes munkaidő,HU42117730161111111111111111,820000
+E002,Nagy Péter,1985-09-30,férfi,Győr,peter.nagy@example.com,+36201239876,234567BC,Fejlesztési vezető,Fejlesztés,,2015-03-15,NULL,Teljes munkaidő,HU89117730162222222222222222,1200000
+E003,Tóth Eszter,1995-11-20,nő,Debrecen,eszter.toth@example.com,+36305554433,345678CD,Szoftvermérnök,Fejlesztés,Kovács Anna,2020-02-10,NULL,Rugalmas,HU35117730163333333333333333,700000
+E004,Farkas Gábor,1992-01-05,férfi,Szeged,gabor.farkas@example.com,+36307778899,456789DE,Rendszergazda,IT,Nagy Péter,2019-09-01,NULL,Teljes munkaidő,HU11117730164444444444444444,680000
+E005,Szabó Lilla,1998-07-18,nő,Pécs,lilla.szabo@example.com,+36201110000,567890EF,HR asszisztens,HR,Kiss Dóra,2021-05-03,NULL,Részmunkaidő,HU22117730165555555555555555,420000
+E006,Kiss Dóra,1983-02-24,nő,Budapest,dora.kiss@example.com,+36304443322,678901FG,HR vezető,HR,,2012-11-12,NULL,Teljes munkaidő,HU55117730166666666666666666,950000
+E007,Molnár Bence,1996-06-09,férfi,Miskolc,bence.molnar@example.com,+36205556677,789012GH,Adatbázis adminisztrátor,IT,Farkas Gábor,2022-01-17,NULL,Teljes munkaidő,HU66117730167777777777777777,640000
+E008,Varga Réka,1999-10-28,nő,Sopron,reka.varga@example.com,+36301239877,890123HI,Gyakornok,Fejlesztés,Kovács Anna,2023-07-01,2024-07-01,Gyakornoki,HU77117730168888888888888888,300000
+E009,Balogh Márton,1988-03-22,férfi,Kecskemét,marton.balogh@example.com,+36202221111,901234IJ,Pénzügyi elemző,Pénzügy,Kocsis András,2017-04-10,NULL,Teljes munkaidő,HU88117730169999999999999999,870000
+E010,Kocsis András,1979-12-15,férfi,Budapest,andras.kocsis@example.com,+36306667777,012345JK,Pénzügyi igazgató,Pénzügy,,2010-01-03,NULL,Teljes munkaidő,HU99117730161000000000000000,1300000

@@ -5,6 +5,8 @@
 #ifndef PROGRAMMING1_NAGYHF_DATASTRUCTS_H
 #define PROGRAMMING1_NAGYHF_DATASTRUCTS_H
 
+#include <stdlib.h>
+
 typedef struct {
     char id[16];
     char nev[64];
@@ -37,4 +39,8 @@ typedef struct Alkalmazott {
     struct Alkalmazott *kov; // láncolt lista miatt
 } Alkalmazott;
 
+typedef struct HashTable {
+    Alkalmazott **buckets;
+    size_t size;
+} HashTable;
 #endif //PROGRAMMING1_NAGYHF_DATASTRUCTS_H
