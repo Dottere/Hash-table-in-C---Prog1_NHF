@@ -119,16 +119,12 @@ void parseCSVFile(char *line, Alkalmazott *alkalmazott){
 void free_list(Alkalmazott *head) {
     Alkalmazott *current = head;
     while (current != NULL) {
-        Alkalmazott *temp = current; // Save current node
-        current = current->kov;      // Move to next
+        Alkalmazott *temp = current;
+        current = current->kov;
 
-        // Free the sub-structs FIRST
         free(temp->szemelyes_adatok);
         free(temp->munka_adatok);
         free(temp->penzugyi_adatok);
-
-        // Free the main struct
         free(temp);
     }
-    printf("--- Memory freed ---\n");
 }

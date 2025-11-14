@@ -14,4 +14,5 @@ add_executable(Programming1_NagyHF main.c
         headers/io.h
         io.c
         headers/linkedlist.h
+        linkedlist.c
 )
