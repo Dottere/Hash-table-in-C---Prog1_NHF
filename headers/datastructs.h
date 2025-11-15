@@ -8,28 +8,28 @@
 #include <stdlib.h>
 
 typedef struct {
-    char id[16];
-    char nev[64];
-    char szul_datum[11]; // (YYYY-MM-DD)
-    char nem[6];
-    char lakhely[64];
-    char email[64];
-    char telefon[20];
-    char szemelyi_szam[12];
+    wchar_t id[16];
+    wchar_t nev[64];
+    wchar_t szul_datum[24]; // (YYYY-MM-DD)
+    wchar_t nem[16];
+    wchar_t lakhely[64];
+    wchar_t email[64];
+    wchar_t telefon[20];
+    wchar_t szemelyi_szam[16];
 } SzemelyesAdat;
 
 typedef struct {
-    char beosztas[64];
-    char reszleg[64];
-    char felettes[64];
-    char munkakezdet[11];
-    char munkavege[11];
-    char munkarend[32];
+    wchar_t beosztas[64];
+    wchar_t reszleg[64];
+    wchar_t felettes[64];
+    wchar_t munkakezdet[24];
+    wchar_t munkavege[24];
+    wchar_t munkarend[32];
 } MunkaAdat;
 
 typedef struct {
-    char bankszamla[34];
-    double fizetes;
+    wchar_t bankszamla[128];
+    wchar_t fizetes[32];
 } PenzugyiAdat;
 
 typedef struct Alkalmazott {

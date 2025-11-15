@@ -18,5 +18,8 @@ void linkedListRemove(Alkalmazott **, Alkalmazott *);
 // Loop through linked list and free everything
 void linkedListFree(Alkalmazott **);
 
+//debug
+void linkedListPrint(Alkalmazott **);
+
 #endif //PROGRAMMING1_NAGYHF_LINKEDLIST_H
 

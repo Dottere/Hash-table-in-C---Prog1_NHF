@@ -3,6 +3,8 @@
 //
 
 #include "headers/linkedlist.h"
+#include "wchar.h"
+#include "headers/fnv1a.h"
 
 Alkalmazott *linkedListNodeCreate(SzemelyesAdat *sz, MunkaAdat *m, PenzugyiAdat *p) {
     Alkalmazott *newElement = (Alkalmazott *) malloc(sizeof(Alkalmazott));
@@ -78,4 +80,18 @@ void linkedListFree(Alkalmazott **head) {
         iter = next;
     }
     *head = NULL;
+}
+
+void linkedListPrint(Alkalmazott **head) {
+    Alkalmazott *iter = *head;
+    while (iter) {
+        wchar_t *nev = iter->szemelyes_adatok->nev;
+        wchar_t *email = iter->szemelyes_adatok->email;
+        wchar_t *szul = iter->szemelyes_adatok->szul_datum;
+        wchar_t *catStr = malloc(sizeof(wchar_t) * (64+64+24+1)); memset(catStr, 0, sizeof(wchar_t) * 64+64+24+1);
+        wcscpy(catStr, nev); wcscat(catStr, email), wcscat(catStr, szul);
+        wprintf(L"\nnév: %ls, email: %ls, születési dátum: %ls, hash: 0x%08X\n", nev, email, szul, FNV1a(catStr));
+        free(catStr);
+        iter = iter->kov;
+    }
 }
