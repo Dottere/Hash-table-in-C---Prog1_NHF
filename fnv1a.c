@@ -5,9 +5,9 @@
 #include "headers/fnv1a.h"
 
 /*
-Expects a stream of bytes that gets hashed into a single 32 bit integer
+Expects a stream of bytes that gets hashed into a single 32-bit integer
  */
-extern uint32_t FNV1a(const wchar_t *str) {
+uint32_t FNV1a(const wchar_t *str) {
     if (!str) return 0;
 
     // Get required size for UTF-8 conversion

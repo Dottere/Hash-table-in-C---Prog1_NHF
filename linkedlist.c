@@ -3,8 +3,7 @@
 //
 
 #include "headers/linkedlist.h"
-#include "wchar.h"
-#include "headers/fnv1a.h"
+
 
 Alkalmazott *linkedListNodeCreate(SzemelyesAdat *sz, MunkaAdat *m, PenzugyiAdat *p) {
     Alkalmazott *newElement = (Alkalmazott *) malloc(sizeof(Alkalmazott));
@@ -85,13 +84,33 @@ void linkedListFree(Alkalmazott **head) {
 void linkedListPrint(Alkalmazott **head) {
     Alkalmazott *iter = *head;
     while (iter) {
-        wchar_t *nev = iter->szemelyes_adatok->nev;
-        wchar_t *email = iter->szemelyes_adatok->email;
-        wchar_t *szul = iter->szemelyes_adatok->szul_datum;
+        wchar_t const *nev = iter->szemelyes_adatok->nev;
+        wchar_t const *email = iter->szemelyes_adatok->email;
+        wchar_t const *szul = iter->szemelyes_adatok->szul_datum;
         wchar_t *catStr = malloc(sizeof(wchar_t) * (64+64+24+1)); memset(catStr, 0, sizeof(wchar_t) * 64+64+24+1);
         wcscpy(catStr, nev); wcscat(catStr, email), wcscat(catStr, szul);
-        wprintf(L"\nnév: %ls, email: %ls, születési dátum: %ls, hash: 0x%08X\n", nev, email, szul, FNV1a(catStr));
+        wprintf(LR"(név: %ls, email: %ls, születési dátum: %ls, hash: 0x%08X
+)", (const unsigned short *)nev,
+            (const unsigned short *)email, (const unsigned short *)szul, FNV1a(catStr));
         free(catStr);
         iter = iter->kov;
     }
+}
+
+int linkedListLen(Alkalmazott **head) {
+    int cnt = 0;
+    Alkalmazott const *iter = *head;
+    while (iter) {
+        cnt++;
+        iter = iter->kov;
+    }
+    return cnt;
+}
+
+void freeNode(Alkalmazott *node) {
+    if (!node) return;
+    free(node->szemelyes_adatok);
+    free(node->munka_adatok);
+    free(node->penzugyi_adatok);
+    free(node);
 }

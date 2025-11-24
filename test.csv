@@ -1,0 +1,11 @@
+id,nev,szul_datum,nem,lakhely,email,telefon,szemelyi_szam,beosztas,reszleg,felettes,munkakezdet,munkavege,munkarend,bankszamla,fizetes
+E111,Szalai Tünde,1991-05-23,nő,Szeged,tunde.szalai@example.com,+36304445566,112233AA,Projektkoordinátor,Fejlesztés,Horváth Ákos,2019-08-12,NULL,Teljes munkaidő,HU91117730161123456789012345,780000
+E112,Horváth Ákos,1984-11-02,férfi,Pécs,akos.horvath@example.com,+36202223344,223344BB,Fejlesztési vezető,Fejlesztés,,2014-02-18,NULL,Teljes munkaidő,HU42117730162234567890123456,1180000
+E113,Barta Júlia,1996-09-14,nő,Budapest,julia.barta@example.com,+36307770012,334455CC,Szoftverfejlesztő,Fejlesztés,Szavai Tünde,2021-01-05,NULL,Rugalmas,HU55117730163345678901234567,670000
+E114,Kelemen Zsolt,1990-03-30,férfi,Miskolc,zsolt.kelemen@example.com,+36305550123,445566DD,Rendszergazda,IT,Horváth Ákos,2020-10-01,NULL,Teljes munkaidő,HU77117730164456789012345678,710000
+E115,Jakab Nóra,1999-12-11,nő,Győr,nora.jakab@example.com,+36201114455,556677EE,HR munkatárs,HR,Szabó Emese,2022-04-14,NULL,Részmunkaidő,HU66117730165567890123456789,430000
+E116,Szabó Emese,1982-08-07,nő,Debrecen,emese.szabo@example.com,+36306668844,667788FF,HR vezető,HR,,2011-10-21,NULL,Teljes munkaidő,HU22117730166678901234567890,910000
+E117,Vincze Márk,1994-04-19,férfi,Kaposvár,mark.vincze@example.com,+36203334456,778899GG,Adatbázis szakértő,IT,Kelemen Zsolt,2021-11-29,NULL,Teljes munkaidő,HU11117730167789012345678901,660000
+E118,Bíró Kitti,2000-06-27,nő,Eger,kitti.biro@example.com,+36301230014,889900HH,Gyakornok,Fejlesztés,Szalai Tünde,2023-06-01,2024-06-01,Gyakornoki,HU99117730168890123456789012,310000
+E119,Simon Gergely,1987-07-09,férfi,Nyíregyháza,gergely.simon@example.com,+36207775511,990011II,Pénzügyi elemző,Pénzügy,Tamás Levente,2018-05-22,NULL,Teljes munkaidő,HU35117730169901234567890123,840000
+E120,Tamás Levente,1978-02-18,férfi,Székesfehérvár,levente.tamas@example.com,+36305556677,001122JJ,Pénzügyi igazgató,Pénzügy,,2009-03-01,NULL,Teljes munkaidő,HU88117730161012345678901234,1280000

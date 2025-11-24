@@ -7,13 +7,16 @@
 
 #include "fnv1a.h"
 #include "datastructs.h"
+#include "linkedlist.h"
 
 #include <stdlib.h>
 #include <inttypes.h>
 #include <wchar.h>
 #include <inttypes.h>
 
-HashTable *htinit(size_t);
-void htinsert(HashTable *, Alkalmazott *, size_t);
+HashTable *htcreate(int);
+int htinsert(HashTable const *ht, Alkalmazott** linkedListHead);
+void printHashTable(HashTable const *ht);
+void htfree(HashTable *ht);
 
 #endif //PROGRAMMING1_NAGYHF_HT_H

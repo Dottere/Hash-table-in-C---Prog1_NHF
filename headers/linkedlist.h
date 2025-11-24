@@ -6,6 +6,10 @@
 #define PROGRAMMING1_NAGYHF_LINKEDLIST_H
 
 #include "datastructs.h"
+#include "fnv1a.h"
+#include "debugmalloc.h"
+
+#include <wchar.h>
 
 // Create a new node
 Alkalmazott *linkedListNodeCreate(SzemelyesAdat *, MunkaAdat *, PenzugyiAdat *);
@@ -17,7 +21,9 @@ void linkedListAppend(Alkalmazott **, Alkalmazott *);
 void linkedListRemove(Alkalmazott **, Alkalmazott *);
 // Loop through linked list and free everything
 void linkedListFree(Alkalmazott **);
-
+void freeNode(Alkalmazott *node);
+// Return how many elements the list has
+int linkedListLen(Alkalmazott **);
 //debug
 void linkedListPrint(Alkalmazott **);
 

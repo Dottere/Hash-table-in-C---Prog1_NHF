@@ -3,9 +3,7 @@
 //
 
 #include "headers/io.h"
-#include "headers/linkedlist.h"
-#include <stdlib.h>
-#include <unistd.h>
+
 
 // debug
 int printFromCSV(char const *filePath) {
@@ -36,13 +34,17 @@ Alkalmazott *readFromCSV(char const *filePath) {
     Alkalmazott *linkedList = NULL;
     char buff[1024];
 
-    // get rid of first line
+    // get rid of first line and checks if file is empty or not
     if (!fgets(buff, sizeof(buff), fp)) {
         fclose(fp);
         return NULL;
     }
 
-    while (fgets(buff, sizeof(buff), fp)) {
+    if (!fgets(buff, sizeof(buff), fp)) {
+        fclose(fp);
+        return NULL;
+    }
+    do {
         buff[strcspn(buff, "\r\n")] = '\0';
 
         Alkalmazott *line = (Alkalmazott *) malloc(sizeof(Alkalmazott));
@@ -70,7 +72,7 @@ Alkalmazott *readFromCSV(char const *filePath) {
         memset(line->munka_adatok, 0, sizeof(MunkaAdat));
         memset(line->penzugyi_adatok, 0, sizeof(PenzugyiAdat));
 
-        char *token = strtok(buff, ",");
+        char const *token = strtok(buff, ",");
 
         if (token){
             mbstowcs(line->szemelyes_adatok->id, token, sizeof(line->szemelyes_adatok->id)/sizeof(wchar_t) - 1);
@@ -154,9 +156,151 @@ Alkalmazott *readFromCSV(char const *filePath) {
         }
 
             linkedListAppend(&linkedList, line);
-    }
+    } while (fgets(buff, sizeof(buff), fp));
 
 
     fclose(fp);
     return linkedList;
+}
+
+char *readPath(void) {
+    size_t size = 128;
+    size_t len = 0;
+    char *buff = (char *) malloc(size);
+    if (!buff) return NULL;
+
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+        if (len + 1 >= size) {
+            size *= 2;
+            char*newBuff = realloc(buff, size);
+            if (!newBuff) {
+                free(buff);
+                return NULL;
+            }
+            buff = newBuff;
+        }
+        buff[len++] = (char) c;
+    }
+    buff[len] = L'\0';
+    return buff;
+}
+
+bool pathExists(const char *path) {
+    FILE *file = fopen(path, "r");
+    if (file) {
+        fclose(file);
+        return true;
+    }
+    return false;
+}
+
+Alkalmazott *readFromInput(void) {
+    wprintf(L"\n--- Új alkalmazott felvétele ---\n");
+
+    Alkalmazott *uj = (Alkalmazott*) malloc(sizeof(Alkalmazott));
+    if (!uj) return NULL;
+
+    uj->szemelyes_adatok = (SzemelyesAdat*) malloc(sizeof(SzemelyesAdat));
+    uj->munka_adatok = (MunkaAdat*) malloc(sizeof(MunkaAdat));
+    uj->penzugyi_adatok = (PenzugyiAdat*) malloc(sizeof(PenzugyiAdat));
+    uj->kov = NULL;
+
+    if (!uj->szemelyes_adatok || !uj->munka_adatok || !uj->penzugyi_adatok) {
+        wprintf(L"Memória foglalási hiba!\n");
+        free(uj->szemelyes_adatok);
+        free(uj->munka_adatok);
+        free(uj->penzugyi_adatok);
+        free(uj);
+        return NULL;
+    }
+
+    memset(uj->szemelyes_adatok, 0, sizeof(SzemelyesAdat));
+    memset(uj->munka_adatok, 0, sizeof(MunkaAdat));
+    memset(uj->penzugyi_adatok, 0, sizeof(PenzugyiAdat));
+
+    readFromInputHelper(L"ID: ",
+        uj->szemelyes_adatok->id,
+        sizeof(uj->szemelyes_adatok->id)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Név: ",
+        uj->szemelyes_adatok->nev,
+        sizeof(uj->szemelyes_adatok->nev)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Születési dátum: ",
+    uj->szemelyes_adatok->szul_datum,
+    sizeof(uj->szemelyes_adatok->szul_datum)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Nem: ",
+    uj->szemelyes_adatok->nem,
+    sizeof(uj->szemelyes_adatok->nem)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Lakhely: ",
+    uj->szemelyes_adatok->lakhely,
+    sizeof(uj->szemelyes_adatok->lakhely)/sizeof(wchar_t));
+
+    readFromInputHelper(L"E-Mail: ",
+    uj->szemelyes_adatok->email,
+    sizeof(uj->szemelyes_adatok->email)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Telefon: ",
+    uj->szemelyes_adatok->telefon,
+    sizeof(uj->szemelyes_adatok->telefon)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Személyi szám: ",
+    uj->szemelyes_adatok->szemelyi_szam,
+    sizeof(uj->szemelyes_adatok->szemelyi_szam)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Beosztás: ",
+    uj->munka_adatok->beosztas,
+    sizeof(uj->munka_adatok->beosztas)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Részleg: ",
+    uj->munka_adatok->reszleg,
+    sizeof(uj->munka_adatok->reszleg)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Felettes: ",
+    uj->munka_adatok->felettes,
+    sizeof(uj->munka_adatok->felettes)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Munkakezdet: ",
+    uj->munka_adatok->munkakezdet,
+    sizeof(uj->munka_adatok->munkakezdet)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Munka vége: ",
+    uj->munka_adatok->munkavege,
+    sizeof(uj->munka_adatok->munkavege)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Munkarend: ",
+    uj->munka_adatok->munkarend,
+    sizeof(uj->munka_adatok->munkarend)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Bankszámlaszám: ",
+    uj->penzugyi_adatok->bankszamla,
+    sizeof(uj->penzugyi_adatok->bankszamla)/sizeof(wchar_t));
+
+    readFromInputHelper(L"Fizetés: ",
+    uj->penzugyi_adatok->fizetes,
+    sizeof(uj->penzugyi_adatok->fizetes)/sizeof(wchar_t));
+
+    return uj;
+}
+
+void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize) {
+    char buff[256]; // Lokális buffer, nem kell átadni kívülről
+
+    wprintf(L"%ls", (const unsigned short *)prompt);
+    fflush(stdout);
+
+    if (fgets(buff, sizeof(buff), stdin) != NULL) {
+        // Enter levágása
+        buff[strcspn(buff, "\n")] = '\0';
+
+        // Konvertálás a célterületre
+        // A destSize-t kívülről kapjuk, mert pointeren a sizeof() nem működik!
+        mbstowcs(dest, buff, destSize - 1);
+
+        // Biztonsági lezárás, ha a mbstowcs esetleg pont teleírta volna
+        dest[destSize - 1] = L'\0';
+    }
 }

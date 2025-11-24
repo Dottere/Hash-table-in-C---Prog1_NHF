@@ -9,3 +9,103 @@ E007,Molnár Bence,1996-06-09,férfi,Miskolc,bence.molnar@example.com,+362055566
 E008,Varga Réka,1999-10-28,nő,Sopron,reka.varga@example.com,+36301239877,890123HI,Gyakornok,Fejlesztés,Kovács Anna,2023-07-01,2024-07-01,Gyakornoki,HU77117730168888888888888888,300000
 E009,Balogh Márton,1988-03-22,férfi,Kecskemét,marton.balogh@example.com,+36202221111,901234IJ,Pénzügyi elemző,Pénzügy,Kocsis András,2017-04-10,NULL,Teljes munkaidő,HU88117730169999999999999999,870000
 E010,Kocsis András,1979-12-15,férfi,Budapest,andras.kocsis@example.com,+36306667777,012345JK,Pénzügyi igazgató,Pénzügy,,2010-01-03,NULL,Teljes munkaidő,HU99117730161000000000000000,1300000
+E011,Hegedűs Márk,1987-05-14,férfi,Budapest,mark.hegedus@example.com,+36301112233,112233KL,Üzleti elemző,Pénzügy,Kocsis András,2016-02-01,NULL,Teljes munkaidő,HU12117730161111111111111112,780000
+E012,Szűcs Barbara,1993-08-09,nő,Szeged,barbara.szucs@example.com,+36203334455,223344LM,Szoftvermérnök,Fejlesztés,Kovács Anna,2020-11-23,NULL,Rugalmas,HU13117730162222222222222223,690000
+E013,Jakab Róbert,1984-03-11,férfi,Pécs,robert.jakab@example.com,+36307776655,334455MN,IT biztonsági szakértő,IT,Farkas Gábor,2017-07-10,NULL,Teljes munkaidő,HU14117730163333333333333334,910000
+E014,Kelemen Júlia,1997-10-03,nő,Győr,julia.kelemen@example.com,+36201112255,445566NO,Marketinges,Marketing,Kelemen Tamás,2021-01-15,NULL,Rugalmas,HU15117730164444444444444445,520000
+E015,Pintér András,1989-12-21,férfi,Miskolc,andras.pinter@example.com,+36305556611,556677OP,Termékmenedzser,Fejlesztés,Nagy Péter,2018-04-01,NULL,Teljes munkaidő,HU16117730165555555555555556,880000
+E016,Boros Eszter,1994-09-17,nő,Budapest,eszter.boros@example.com,+36206667722,667788PQ,Asszisztens,HR,Kiss Dóra,2022-05-03,NULL,Részmunkaidő,HU17117730166666666666666667,380000
+E017,Rácz Gergely,1991-06-29,férfi,Szeged,gergely.racz@example.com,+36304443311,778899QR,Rendszermérnök,IT,Farkas Gábor,2019-02-11,NULL,Teljes munkaidő,HU18117730167777777777777778,710000
+E018,Tamás Réka,1998-04-01,nő,Pécs,reka.tamas@example.com,+36203335577,889900RS,Gyakornok,HR,Kiss Dóra,2023-09-01,2024-09-01,Gyakornoki,HU19117730168888888888888889,280000
+E019,Lengyel Balázs,1982-11-07,férfi,Budapest,balazs.lengyel@example.com,+36302221122,990011ST,Jogtanácsos,Jogi,Kocsis András,2014-06-30,NULL,Teljes munkaidő,HU10117730169999999999999990,1150000
+E020,Németh Tímea,1996-07-25,nő,Sopron,timea.nemeth@example.com,+36205558877,101112TU,Könyvelő,Pénzügy,Balogh Márton,2021-10-10,NULL,Teljes munkaidő,HU11117730161000000000000001,650000
+E021,Kádár Szilárd,1988-02-16,férfi,Budapest,szilard.kadar@example.com,+36301224455,121314UV,Frontend fejlesztő,Fejlesztés,Kovács Anna,2019-05-13,NULL,Rugalmas,HU12117730161111111111111113,750000
+E022,Somogyi Lívia,1995-01-08,nő,Győr,liviasomogyi@example.com,+36204445566,131415VW,Backend fejlesztő,Fejlesztés,Nagy Péter,2020-02-01,NULL,Teljes munkaidő,HU13117730162222222222222224,770000
+E023,Kocsárdi Áron,1993-05-19,férfi,Szeged,aron.kocsardi@example.com,+36306669900,141516WX,UX designer,Fejlesztés,Kovács Anna,2022-06-14,NULL,Rugalmas,HU14117730163333333333333335,690000
+E024,Török Ramóna,1999-09-22,nő,Debrecen,ramona.torok@example.com,+36307774421,151617XY,Gyakornok,IT,Farkas Gábor,2023-03-01,2024-03-01,Gyakornoki,HU15117730164444444444444446,300000
+E025,Kertész Dávid,1986-03-14,férfi,Budapest,david.kertesz@example.com,+36203338899,161718YZ,Projektkoordinátor,Fejlesztés,Nagy Péter,2015-09-12,NULL,Teljes munkaidő,HU16117730165555555555555557,820000
+E026,Jenei Adél,1997-02-27,nő,Pécs,adel.jenei@example.com,+36205553322,171819AA,HR tanácsadó,HR,Kiss Dóra,2022-08-19,NULL,Teljes munkaidő,HU17117730166666666666666668,540000
+E027,Balogh Attila,1992-07-04,férfi,Miskolc,attila.balogh@example.com,+36302229988,181920BB,Szoftvertesztelő,Fejlesztés,Kovács Anna,2018-11-30,NULL,Teljes munkaidő,HU18117730167777777777777779,620000
+E028,Fábián Szandra,1994-10-12,nő,Szeged,szandra.fabian@example.com,+36203337722,192021CC,Minőségbiztosítási szakértő,Fejlesztés,Nagy Péter,2021-05-04,NULL,Teljes munkaidő,HU19117730168888888888888880,660000
+E029,Takács Milán,1990-12-02,férfi,Budapest,milan.takacs@example.com,+36304445599,202122DD,Adatkutató,Pénzügy,Kocsis András,2020-03-21,NULL,Rugalmas,HU10117730169999999999999991,930000
+E030,Gál Viktória,1996-11-15,nő,Győr,viktoria.gal@example.com,+36205557788,212223EE,Marketing elemző,Marketing,Kelemen Tamás,2022-02-10,NULL,Teljes munkaidő,HU11117730161000000000000002,580000
+E031,Illés Csaba,1985-06-18,férfi,Pécs,csaba.illes@example.com,+36306668811,222324FF,Terméktámogató,Rendszertámogatás,Farkas Gábor,2016-04-05,NULL,Teljes munkaidő,HU12117730161111111111111114,640000
+E032,Márton Blanka,1998-03-02,nő,Budapest,blanka.marton@example.com,+36203332211,232425GG,Szolgáltatásmenedzser,IT,Nagy Péter,2023-01-22,NULL,Teljes munkaidő,HU13117730162222222222222225,600000
+E033,Vass Kornél,1994-07-08,férfi,Szeged,kornel.vass@example.com,+36305556699,242526HH,DevOps mérnök,IT,Farkas Gábor,2020-08-01,NULL,Teljes munkaidő,HU14117730163333333333333336,870000
+E034,Lakatos Gréta,1992-01-27,nő,Miskolc,greta.lakatos@example.com,+36202224455,252627II,HR generalista,HR,Kiss Dóra,2019-03-14,NULL,Teljes munkaidő,HU15117730164444444444444447,580000
+E035,Simon Patrik,1987-09-05,férfi,Pécs,patrik.simon@example.com,+36301119944,262728JJ,Könyvelési asszisztens,Pénzügy,Balogh Márton,2018-07-17,NULL,Teljes munkaidő,HU16117730165555555555555558,540000
+E036,Orbán Noémi,1996-05-31,nő,Budapest,noemi.orban@example.com,+36203338811,272829KK,Adatvizualizációs szakértő,Pénzügy,Balogh Márton,2021-11-30,NULL,Rugalmas,HU17117730166666666666666669,710000
+E037,Szabó Botond,1990-08-13,férfi,Szeged,botond.szabo@example.com,+36307773322,282930LL,Szoftvermérnök,Fejlesztés,Kovács Anna,2017-12-04,NULL,Teljes munkaidő,HU18117730167777777777777770,780000
+E038,Vida Dorina,1999-01-14,nő,Debrecen,dorina.vida@example.com,+36205559900,293031MM,Gyakornok,Marketing,Kelemen Tamás,2023-06-01,2024-06-01,Gyakornoki,HU19117730168888888888888881,260000
+E039,Csík Dávid,1984-12-24,férfi,Győr,david.csik@example.com,+36302223388,303132NN,Projektellenőr,Pénzügy,Kocsis András,2013-03-15,NULL,Teljes munkaidő,HU10117730169999999999999992,1020000
+E040,Kulcsár Enikő,1997-11-05,nő,Szeged,eniko.kulcsar@example.com,+36204443399,313233OO,Junior fejlesztő,Fejlesztés,Kovács Anna,2022-03-01,NULL,Rugalmas,HU11117730161000000000000003,580000
+E041,Gajdos Máté,1989-02-18,férfi,Miskolc,mate.gajdos@example.com,+36303335511,323334PP,Senior rendszergazda,IT,Farkas Gábor,2016-08-10,NULL,Teljes munkaidő,HU12117730161111111111111115,920000
+E042,Kertai Szilvia,1995-04-12,nő,Pécs,szilvia.kertai@example.com,+36202223344,333435QQ,HR adminisztrátor,HR,Kiss Dóra,2021-03-12,NULL,Részmunkaidő,HU13117730162222222222222226,410000
+E043,Veres Tamás,1992-10-30,férfi,Budapest,tamas.veres@example.com,+36306667788,343536RR,IT auditor,IT,Farkas Gábor,2019-12-01,NULL,Teljes munkaidő,HU14117730163333333333333337,860000
+E044,Makai Dóra,1998-12-11,nő,Szeged,dora.makai@example.com,+36203339988,353637SS,Junior marketinges,Marketing,Kelemen Tamás,2023-04-05,NULL,Rugalmas,HU15117730164444444444444448,450000
+E045,Kovács Domonkos,1983-07-19,férfi,Győr,domonkos.kovacs@example.com,+36302221133,363738TT,Pénzügyi szakértő,Pénzügy,Kocsis András,2012-10-14,NULL,Teljes munkaidő,HU16117730165555555555555559,1180000
+E046,Bozóki Sára,1996-01-09,nő,Pécs,sara.bozoki@example.com,+36206664477,373839UU,Toborzó,HR,Kiss Dóra,2020-07-22,NULL,Teljes munkaidő,HU17117730166666666666666660,530000
+E047,Orosz Krisztián,1991-03-15,férfi,Miskolc,krisztian.orosz@example.com,+36305559933,383940VV,Üzemeltetési mérnök,IT,Farkas Gábor,2018-04-19,NULL,Teljes munkaidő,HU18117730167777777777777771,700000
+E048,Füredi Nóra,1997-06-28,nő,Budapest,nora.furedi@example.com,+36201113355,394041WW,Szoftverfejlesztő gyakornok,Fejlesztés,Kovács Anna,2023-08-01,2024-08-01,Gyakornoki,HU19117730168888888888888882,300000
+E049,Horváth Ákos,1988-11-07,férfi,Szeged,akos.horvath@example.com,+36307774455,404142XX,DevOps junior,IT,Farkas Gábor,2021-12-10,NULL,Rugalmas,HU10117730169999999999999993,640000
+E050,Vidó Laura,1994-08-12,nő,Pécs,laura.vido@example.com,+36202226688,414243YY,HR specialista,HR,Kiss Dóra,2019-11-01,NULL,Teljes munkaidő,HU11117730161000000000000004,620000
+E051,Bíró Olivér,1990-05-14,férfi,Győr,oliver.biro@example.com,+36301118844,424344ZZ,Számviteli vezető,Pénzügy,Kocsis András,2015-01-03,NULL,Teljes munkaidő,HU12117730161111111111111116,1250000
+E052,Kassa Szonja,1999-04-20,nő,Budapest,szonja.kassa@example.com,+36203330077,434445AB,Gyakornok,Pénzügy,Balogh Márton,2023-10-01,2024-10-01,Gyakornoki,HU13117730162222222222222227,270000
+E053,Hajdu Bence,1992-06-03,férfi,Szeged,bence.hajdu@example.com,+36306665544,444546AC,Szoftverarchitekt,Fejlesztés,Nagy Péter,2018-06-17,NULL,Teljes munkaidő,HU14117730163333333333333338,1100000
+E054,Gulyás Emese,1995-12-01,nő,Pécs,emese.gulyas@example.com,+36204445522,454647AD,Minőségellenőr,Fejlesztés,Kovács Anna,2020-09-27,NULL,Rugalmas,HU15117730164444444444444449,630000
+E055,Lukács Márton,1987-01-23,férfi,Budapest,marci.lukacs@example.com,+36307779922,464748AE,Senior fejlesztő,Fejlesztés,Nagy Péter,2014-03-19,NULL,Teljes munkaidő,HU16117730165555555555555560,1250000
+E056,Kálnoky Zita,1996-07-16,nő,Győr,zita.kalnoky@example.com,+36201112289,474849AF,HR koordinátor,HR,Kiss Dóra,2022-04-25,NULL,Teljes munkaidő,HU17117730166666666666666661,550000
+E057,Jámbor Tamás,1993-09-30,férfi,Szeged,tamas.jambor@example.com,+36303339911,484950AG,Számítógépes hálózati mérnök,IT,Farkas Gábor,2019-03-04,NULL,Teljes munkaidő,HU18117730167777777777777772,760000
+E058,Moldván Kitti,1998-02-14,nő,Debrecen,kitti.moldvan@example.com,+36204448855,495051AH,Gyakornok,Marketing,Kelemen Tamás,2023-05-01,2024-05-01,Gyakornoki,HU19117730168888888888888883,260000
+E059,Csabai Dániel,1986-10-18,férfi,Pécs,daniel.csabai@example.com,+36301115544,505152AI,Tesztmenedzser,Fejlesztés,Kovács Anna,2016-09-20,NULL,Teljes munkaidő,HU10117730169999999999999994,900000
+E060,Makai Petra,1994-09-04,nő,Szeged,petra.makai@example.com,+36202223311,515253AJ,Marketing vezető,Marketing,Kelemen Tamás,2019-08-12,NULL,Teljes munkaidő,HU11117730161000000000000005,980000
+E061,Hoffmann Zsolt,1988-03-26,férfi,Budapest,zsolt.hoffmann@example.com,+36305558811,525354AK,Senior adatbázis adminisztrátor,IT,Farkas Gábor,2015-03-01,NULL,Teljes munkaidő,HU12117730161111111111111117,990000
+E062,Szabó Emília,1997-11-12,nő,Miskolc,emilia.szabo@example.com,+36203336644,535455AL,Junior HR asszisztens,HR,Kiss Dóra,2022-11-30,NULL,Részmunkaidő,HU13117730162222222222222228,390000
+E063,Dudás Tamara,1993-04-25,nő,Győr,tamara.dudas@example.com,+36306663333,545556AM,Adatvédelmi tisztviselő,Jogi,Kocsis András,2018-10-22,NULL,Teljes munkaidő,HU14117730163333333333333339,850000
+E064,Fehér Máté,1991-09-14,férfi,Budapest,mate.feher@example.com,+36202220055,555657AN,Rendszeradminisztrátor,IT,Farkas Gábor,2017-01-05,NULL,Teljes munkaidő,HU15117730164444444444444440,720000
+E065,Kárpáti Lili,1999-07-19,nő,Szeged,lili.karpati@example.com,+36301112244,565758AO,Gyakornok,Fejlesztés,Kovács Anna,2023-06-01,2024-06-01,Gyakornoki,HU16117730165555555555555561,280000
+E066,Varga Szilveszter,1985-04-02,férfi,Pécs,szilveszter.varga@example.com,+36205558866,575859AP,Pénzügyi elemző,Pénzügy,Balogh Márton,2013-11-11,NULL,Teljes munkaidő,HU17117730166666666666666662,840000
+E067,Balogh Réka,1996-05-31,nő,Budapest,reka.balogh@example.com,+36304440022,585960AQ,Junior szoftvermérnök,Fejlesztés,Kovács Anna,2021-07-01,NULL,Rugalmas,HU18117730167777777777777773,640000
+E068,Nagy Benjámin,1992-11-08,férfi,Miskolc,benjamin.nagy@example.com,+36203335544,596061AR,IT technikus,IT,Farkas Gábor,2019-04-15,NULL,Teljes munkaidő,HU19117730168888888888888884,580000
+E069,Érsek Klára,1997-02-10,nő,Debrecen,klara.ersek@example.com,+36306661188,606162AS,HR gyakornok,HR,Kiss Dóra,2023-08-15,2024-08-15,Gyakornoki,HU10117730169999999999999995,250000
+E070,Csonka Gergő,1989-10-21,férfi,Győr,gergo.csonka@example.com,+36205556633,616263AT,Könyvelő,Pénzügy,Balogh Márton,2017-06-02,NULL,Teljes munkaidő,HU11117730161000000000000006,650000
+E071,Pataki Fanni,1994-01-11,nő,Szeged,fanni.pataki@example.com,+36303337744,626364AU,Marketing asszisztens,Marketing,Kelemen Tamás,2021-02-12,NULL,Részmunkaidő,HU12117730161111111111111118,430000
+E072,Krasznai Levente,1986-12-07,férfi,Pécs,levente.krasznai@example.com,+36202223388,636465AV,Senior IT auditor,IT,Farkas Gábor,2014-10-03,NULL,Teljes munkaidő,HU13117730162222222222222229,1040000
+E073,Széplaki Zsófia,1997-08-13,nő,Sopron,zsofia.szeplaki@example.com,+36301119900,646566AW,Gyakornok,Marketing,Kelemen Tamás,2023-07-01,2024-07-01,Gyakornoki,HU14117730163333333333333330,260000
+E074,Batári Dániel,1992-02-19,férfi,Budapest,daniel.batari@example.com,+36203330011,656667AX,Termékspecialista,Fejlesztés,Nagy Péter,2019-05-20,NULL,Teljes munkaidő,HU15117730164444444444444441,780000
+E075,Kiss Veronika,1998-06-28,nő,Győr,veronika.kiss@example.com,+36306668844,666768AY,Junior rendszergazda,IT,Farkas Gábor,2022-10-17,NULL,Rugalmas,HU16117730165555555555555562,600000
+E076,Árvai Gábor,1984-04-30,férfi,Pécs,gabor.arvai@example.com,+36201114422,676869AZ,Pénzügyi tanácsadó,Pénzügy,Kocsis András,2011-12-11,NULL,Teljes munkaidő,HU17117730166666666666666663,1120000
+E077,Fodor Beáta,1995-10-22,nő,Miskolc,beata.fodor@example.com,+36302224477,686970BA,Junior könyvelő,Pénzügy,Balogh Márton,2022-03-11,NULL,Teljes munkaidő,HU18117730167777777777777774,520000
+E078,Szalai Márk,1991-07-06,férfi,Szeged,mark.szalai@example.com,+36203337711,697071BB,Full-stack fejlesztő,Fejlesztés,Kovács Anna,2018-03-22,NULL,Teljes munkaidő,HU19117730168888888888888885,850000
+E079,Urbán Kitti,1999-05-29,nő,Budapest,kitti.urban@example.com,+36300112299,707172BC,Gyakornok,Fejlesztés,Kovács Anna,2023-09-01,2024-09-01,Gyakornoki,HU10117730169999999999999996,280000
+E080,Lukács Dénes,1987-11-14,férfi,Pécs,denes.lukacs@example.com,+36204440033,717273BD,Szenior DevOps mérnök,IT,Farkas Gábor,2015-09-14,NULL,Teljes munkaidő,HU11117730161000000000000007,1180000
+E081,Gecse Adrienn,1996-03-04,nő,Győr,adrienn.gecse@example.com,+36305557733,727374BE,HR tanácsadó,HR,Kiss Dóra,2021-09-22,NULL,Teljes munkaidő,HU12117730161111111111111119,560000
+E082,Vida Ádám,1993-12-08,férfi,Szeged,adam.vida@example.com,+36203338866,737475BF,Külső auditor,Jogi,Kocsis András,2019-08-19,NULL,Teljes munkaidő,HU13117730162222222222222220,960000
+E083,Tapolcai Zita,1995-09-03,nő,Debrecen,zita.tapolcai@example.com,+36302229977,747576BG,Junior adatkutató,Pénzügy,Balogh Márton,2022-12-01,NULL,Rugalmas,HU14117730163333333333333331,620000
+E084,Tarján Kristóf,1990-01-27,férfi,Budapest,kristof.tarjan@example.com,+36205556622,757677BH,Projektvezető,Fejlesztés,Nagy Péter,2017-07-30,NULL,Teljes munkaidő,HU15117730164444444444444442,990000
+E085,Somlai Róza,1998-07-18,nő,Pécs,roza.somlai@example.com,+36304443300,767778BI,HR munkatárs,HR,Kiss Dóra,2023-02-14,NULL,Részmunkaidő,HU16117730165555555555555563,430000
+E086,Balogh Vince,1986-06-02,férfi,Győr,vince.balogh@example.com,+36203332222,777879BJ,Senior szoftvermérnök,Fejlesztés,Kovács Anna,2013-05-19,NULL,Teljes munkaidő,HU17117730166666666666666664,1300000
+E087,Szöllősi Kata,1997-03-10,nő,Szeged,kata.szollosi@example.com,+36306660022,787980BK,Marketing kutató,Marketing,Kelemen Tamás,2021-12-06,NULL,Teljes munkaidő,HU18117730167777777777777775,570000
+E088,Nagy Áron,1994-08-16,férfi,Budapest,aron.nagy@example.com,+36202225533,798081BL,Folyamatmérnök,Fejlesztés,Nagy Péter,2019-11-08,NULL,Teljes munkaidő,HU19117730168888888888888886,830000
+E089,Rácz Eszter,1999-10-20,nő,Miskolc,eszter.racz@example.com,+36304448877,808182BM,Gyakornok,Pénzügy,Balogh Márton,2023-06-01,2024-06-01,Gyakornoki,HU10117730169999999999999997,250000
+E090,Ferenczi Lajos,1988-08-04,férfi,Szeged,lajos.ferenczi@example.com,+36205553399,818283BN,IT tanácsadó,IT,Farkas Gábor,2016-07-12,NULL,Teljes munkaidő,HU11117730161000000000000008,870000
+E091,Benkő Dorka,1996-01-23,nő,Debrecen,dorka.benko@example.com,+36307770044,828384BO,Junior termékmenedzser,Fejlesztés,Kovács Anna,2022-03-01,NULL,Rugalmas,HU12117730161111111111111110,600000
+E092,Pálfi Dénes,1993-04-14,férfi,Győr,denes.palfi@example.com,+36202224466,838485BP,Üzleti tanácsadó,Pénzügy,Kocsis András,2018-04-09,NULL,Teljes munkaidő,HU13117730162222222222222221,900000
+E093,Gál Petra,1997-09-29,nő,Pécs,petra.gal@example.com,+36305556677,848586BQ,HR elemző,HR,Kiss Dóra,2021-01-25,NULL,Teljes munkaidő,HU14117730163333333333333332,580000
+E094,Farkas Olivér,1990-02-08,férfi,Szeged,oliver.farkas@example.com,+36203335500,858687BR,Szoftvertesztelő,Fejlesztés,Kovács Anna,2017-04-16,NULL,Teljes munkaidő,HU15117730164444444444444443,650000
+E095,Lévai Virág,1998-12-01,nő,Budapest,virag.levai@example.com,+36301116633,868788BS,Gyakornok,HR,Kiss Dóra,2023-09-01,2024-09-01,Gyakornoki,HU16117730165555555555555564,260000
+E096,Máté Kristóf,1985-05-11,férfi,Miskolc,kristof.mate@example.com,+36205557711,878889BT,Pénzügyi kontroller,Pénzügy,Balogh Márton,2012-09-17,NULL,Teljes munkaidő,HU17117730166666666666666665,1080000
+E097,Tóth Lilla,1996-06-23,nő,Sopron,lilla.toth@example.com,+36304440055,888990BU,Junior frontend fejlesztő,Fejlesztés,Kovács Anna,2022-05-12,NULL,Rugalmas,HU18117730167777777777777776,600000
+E098,Kővári Dénes,1991-03-06,férfi,Szeged,denes.kovari@example.com,+36202227733,899091BV,IT projektmenedzser,IT,Farkas Gábor,2019-11-01,NULL,Teljes munkaidő,HU19117730168888888888888887,950000
+E099,Fehér Kamilla,1997-04-17,nő,Pécs,kamilla.feher@example.com,+36303334466,909192BW,HR fejlesztési gyakornok,HR,Kiss Dóra,2023-07-01,2024-07-01,Gyakornoki,HU10117730169999999999999998,250000
+E100,Berki Ákos,1989-09-09,férfi,Budapest,akos.berki@example.com,+36201119933,919293BX,Biztonságtechnikai mérnök,IT,Farkas Gábor,2018-02-28,NULL,Teljes munkaidő,HU11117730161000000000000009,880000
+E101,Vincze Fanni,1995-10-08,nő,Debrecen,fanni.vincze@example.com,+36306667722,929394BY,Junior pénzügyi elemző,Pénzügy,Balogh Márton,2021-06-01,NULL,Teljes munkaidő,HU12117730161111111111111111,620000
+E102,Szatmári Lőrinc,1992-07-04,férfi,Győr,lorinc.szatmari@example.com,+36203338855,939495BZ,Szoftvermérnök,Fejlesztés,Nagy Péter,2019-05-14,NULL,Teljes munkaidő,HU13117730162222222222222222,790000
+E103,Somogyi Petra,1998-02-27,nő,Pécs,petra.somogyi@example.com,+36304441100,949596CA,Gyakornok,Fejlesztés,Kovács Anna,2023-10-01,2024-10-01,Gyakornoki,HU14117730163333333333333333,270000
+E104,Orbán Milán,1990-01-19,férfi,Szeged,milan.orban@example.com,+36202223300,959697CB,Rendszerüzemeltető,IT,Farkas Gábor,2017-10-03,NULL,Teljes munkaidő,HU15117730164444444444444444,740000
+E105,Kispál Adél,1997-03-31,nő,Budapest,adel.kispal@example.com,+36305551144,969798CC,Marketing koordinátor,Marketing,Kelemen Tamás,2021-08-11,NULL,Teljes munkaidő,HU16117730165555555555555565,540000
+E106,Rábai Balázs,1986-12-11,férfi,Győr,balazs.rabai@example.com,+36204446633,979899CD,Pénzügyi vezető,Pénzügy,Kocsis András,2012-02-26,NULL,Teljes munkaidő,HU17117730166666666666666666,1350000
+E107,Törtei Katalin,1994-09-22,nő,Pécs,katalin.tortei@example.com,+36306663311,989910CE,HR elemző,HR,Kiss Dóra,2020-10-19,NULL,Teljes munkaidő,HU18117730167777777777777777,580000
+E108,Farkas Benedek,1991-02-07,férfi,Szeged,benedek.farkas@example.com,+36202229955,999001CF,Szenior szoftverfejlesztő,Fejlesztés,Nagy Péter,2016-06-07,NULL,Teljes munkaidő,HU19117730168888888888888888,1280000
+E109,Máthé Luca,1998-07-12,nő,Sopron,luca.mathe@example.com,+36303336622,009102CG,Gyakornok,IT,Farkas Gábor,2023-09-01,2024-09-01,Gyakornoki,HU10117730169999999999999999,260000
+E110,Hajnal Ádám,1987-11-02,férfi,Budapest,adam.hajnal@example.com,+36201114466,019203CH,Automatizálási mérnök,Fejlesztés,Nagy Péter,2014-11-03,NULL,Teljes munkaidő,HU11117730161000000000000010,960000
