@@ -6,6 +6,7 @@
 #define PROGRAMMING1_NAGYHF_DATASTRUCTS_H
 
 #include <stdlib.h>
+#include <stdint.h>
 
 typedef struct {
     wchar_t id[16];
@@ -37,6 +38,7 @@ typedef struct Alkalmazott {
     MunkaAdat *munka_adatok;
     PenzugyiAdat *penzugyi_adatok;
     struct Alkalmazott *kov; // láncolt lista miatt
+    uint32_t storedHash;
 } Alkalmazott;
 
 typedef struct HashTable {

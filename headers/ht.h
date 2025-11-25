@@ -15,8 +15,11 @@
 #include <inttypes.h>
 
 HashTable *htcreate(int);
-int htinsert(HashTable const *ht, Alkalmazott** linkedListHead);
+int htinsert(HashTable *ht, Alkalmazott** linkedListHead);
 void printHashTable(HashTable const *ht);
 void htfree(HashTable *ht);
+int htresize(HashTable *ht);
+uint32_t calculateHash(Alkalmazott const *alkalmazott);
+int htdelete(HashTable *ht, Alkalmazott const *target);
 
 #endif //PROGRAMMING1_NAGYHF_HT_H

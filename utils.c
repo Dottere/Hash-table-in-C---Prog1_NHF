@@ -17,7 +17,6 @@ void printHelp(void) {
 
 void statistics(HashTable *ht) {
     wprintf(L"\nÜtközés statisztika:\n");
-    sleep(1);
     int emptyBuckets = 0;
     int collisions = 0;
     for (size_t j = 0; j < ht->size; j++) {
@@ -44,7 +43,7 @@ void statistics(HashTable *ht) {
 bool confirmOverwrite(const char *path) {
     char choice[16];
     while (true) {
-        wprintf(L"Már történt beolvasás \"%hs\" fájlból. Szeretnéd felülírni?\n[i] - igen\n[n] - nem\nVálasz: ", path);
+        printf("Már történt beolvasás \"%s\" fájlból. Szeretnéd felülírni?\n[i] - igen\n[n] - nem\nVálasz: ", path);
         if (!fgets(choice, sizeof(choice), stdin)) return false;
 
         if (choice[0] == 'n' || choice[0] == 'N') return false;
@@ -55,71 +54,62 @@ bool confirmOverwrite(const char *path) {
 }
 
 void howToModify(HashTable *ht, char const *path) {
-    char choice1[16];
+    char choice[16];
     while (true) {
-        wprintf(L"Hogyan szeretnéd módosítani a Hash-Táblát?\n1. Hozzáadni\n2. Törölni");
-        if (!fgets(choice1, sizeof(choice1), stdin)) return;
+        wprintf(L"#Módosítás#\n");
+        wprintf(L"1. Hozzáadás\n2.Törlés\n3.Mégsem\nVálasztás:");
+        if (!fgets(choice, sizeof(choice), stdin)) return;
 
-        if (choice1[0] == '1') {
-            char choice2[16];
-            wprintf(L"Hány elemet szeretnél hozzáadni?\n1. Egyet manuálisan\n2. Többet fájlból");
-            if (!fgets(choice2, sizeof(choice2), stdin)) return;
+        if (choice[0] == '1') {
+            wprintf(L"Hány elemet szeretnél hozzáadni?\n1.Egyet manuálisan\n2.Többet fájlból\n3.Mégsem\nVálasztás: ");
+            if (!fgets(choice, sizeof(choice), stdin)) return;
 
-            if (choice2[0] == '1') {
+            if (choice[0] == '1') {
                 Alkalmazott *ujEmber = readFromInput();
 
                 if (ujEmber) {
+                    ujEmber->kov = NULL;
+
                     int const res = htinsert(ht, &ujEmber);
 
-                    if (res == 0) {
-                        wprintf(L"✓ Sikeresen hozzáadva!\n");
-                    } else {
-                        wprintf(L"✗ Hiba a beszúrásnál! Hibakód: %d\n", res);
-                        freeNode(ujEmber);
-                        return;
-                    }
+                    if (res == 0) wprintf(L"✓ Sikeresen hozzáadva!\n");
+                    else wprintf(L"✗ Hiba a beszúrásnál! Hibakód: %d\n", res);
 
                     freeNode(ujEmber);
-                } else {
-                    wprintf(L"Hiba az adatok felvéleténél (Memória)\n");
                 }
-            } else if (choice2[0] == '2') {
-                wprintf(L"Mely fájlból szeretnél újonnan beszúrni?");
-                wprintf(L"Elérési út: ");
+            }
+            else if (choice[0] == '2') {
+                wprintf(L"Az új fájl elérési útja: ");
                 char *newPath = readPath();
-                while (!pathExists(path)){
-                    wprintf(L"Ilyen elérési út nem létezik:\"%hs\"\n", newPath);
-                    wprintf(L"Elérési út: ");
+
+                while (!pathExists(newPath)){
+                    printf("Nem létező fájl:\"%s\"\nÚjra: ", newPath);
                     free(newPath);
-                    path = readPath();
+                    newPath = readPath();
                 }
 
-                if (strcmp(path, newPath) == 0) {
+                if (path && strcmp(path, newPath) == 0) {
                     wprintf(L"Nem szúrhatod be ugyanazt a listát kétszer!");
-                    break;
+                    free(newPath);
+                    continue;
                 }
 
                 Alkalmazott *ujLista = readFromCSV(newPath);
-                if (!ujLista) {
-                    wprintf(L"Hiba történt az új lista beolvasásakor!");
-                    return;
-                }
                 free(newPath);
 
-                int const result = htinsert(ht, &ujLista);
-
-                if (result != 0) {
-                    wprintf(L"✗ Beszúrás az új listába sikertelen! Hibakód: %d\n", result);
+                if (ujLista) {
+                    int const result = htinsert(ht, &ujLista);
+                    if (result == 0) wprintf(L"Elem sikeresen beszúrva!");
+                    else wprintf(L"✗ Beszúrás az új listába sikertelen! Hibakód: %d\n", result);
                     linkedListFree(&ujLista);
-                    return;
+                } else {
+                    wprintf(L"Hiba, nem sikerült beolvasni a fájlt!");
                 }
-                linkedListFree(&ujLista);
-                return;
             }
-        } else if (choice1[0] == '2') {
-            wchar_t name[64];
-            wchar_t email[64];
-            wchar_t szul[24];
+        }
+        else if (choice[0] == '2') {
+            Alkalmazott *dummy = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
+            dummy->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
 
             char inputBuff[256];
 
@@ -129,14 +119,14 @@ void howToModify(HashTable *ht, char const *path) {
             if (fgets(inputBuff, sizeof(inputBuff), stdin) != NULL) {
                 inputBuff[strcspn(inputBuff, "\n")] = '\0';
 
-                mbstowcs(name, inputBuff, sizeof(name) / sizeof(wchar_t) - 1);
+                mbstowcs(dummy->szemelyes_adatok->nev, inputBuff, 63);
             }
 
             wprintf(L"E-mail cím: ");
             if (fgets(inputBuff, sizeof(inputBuff), stdin) != NULL) {
                 inputBuff[strcspn(inputBuff, "\n")] = '\0';
 
-                mbstowcs(email, inputBuff, sizeof(email) / sizeof(wchar_t) - 1);
+                mbstowcs(dummy->szemelyes_adatok->email, inputBuff, 63);
             }
 
 
@@ -144,44 +134,20 @@ void howToModify(HashTable *ht, char const *path) {
             if (fgets(inputBuff, sizeof(inputBuff), stdin) != NULL) {
                 inputBuff[strcspn(inputBuff, "\n")] = '\0';
 
-                mbstowcs(szul, inputBuff, sizeof(szul) / sizeof(wchar_t) - 1);
+                mbstowcs(dummy->szemelyes_adatok->szul_datum, inputBuff, 23);
             }
 
-            wchar_t *catStr = (wchar_t*) calloc(wcslen(name) + wcslen(email) + wcslen(szul) + 1, sizeof(wchar_t));
-            if (!catStr) return;
-
-            wcscpy(catStr, name); wcscat(catStr, email); wcscat(catStr, szul);
-            uint32_t const hash = FNV1a(catStr);
-            uint32_t const index = hash % ht->size;
-
-            free(catStr);
-
-            Alkalmazott *current = ht->buckets[index];
-            Alkalmazott *prev = NULL;
-            bool found = false;
-
-            while (current != NULL) {
-                if (wcscmp(current->szemelyes_adatok->nev, name) == 0 &&
-                    wcscmp(current->szemelyes_adatok->email, email) == 0 &&
-                    wcscmp(current->szemelyes_adatok->szul_datum, szul) == 0) {
-                    if (prev == NULL) {
-                        ht->buckets[index] = current->kov;
-                    } else {
-                        prev->kov = current->kov;
-                    }
-
-                    freeNode(current);
-                    found = true;
-                    wprintf(L"✓ Sikeres törlés!\n");
-                    break;
-                }
-                prev = current;
-                current = current->kov;
+            if (htdelete(ht, dummy)==0) {
+                wprintf(L"Sikeres törlés!");
             }
-            if (!found) {
-                wprintf(L"⚠ Nem található ilyen elem a táblában.\n");
+            else {
+                wprintf(L"Nem található a listában a megadott elem!");
             }
 
-        }
+            free(dummy->szemelyes_adatok);
+            free(dummy);
+
+        } else if (choice[0] == '3')
+            return;
     }
 }

@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <unistd.h>
 
 int printFromCSV(char const *);
 Alkalmazott *readFromCSV(char const *);
@@ -23,6 +22,6 @@ Alkalmazott *readFromInput(void);
 char *readPath(void);
 bool pathExists(const char *path);
 void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize);
-
+int writeToCSV(HashTable *ht, char const *path);
 
 #endif //PROGRAMMING1_NAGYHF_IO_H

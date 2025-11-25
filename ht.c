@@ -4,6 +4,8 @@
 
 #include "headers/ht.h"
 
+#include <threads.h>
+
 /**
  * @brief Létrehoz egy Hash-Táblát amellyel képes a htinsert() függvény dolgozni
  *
@@ -54,43 +56,35 @@ HashTable *htcreate(int initSize) {
  * @note Kapcsolódó függvények: htcreate(), htfree()
  *
  */
-int htinsert(HashTable const *ht, Alkalmazott **linkedListHead) {
+int htinsert(HashTable *ht, Alkalmazott **linkedListHead) {
     if (!ht || !linkedListHead || !*linkedListHead) return -5;
-    if (linkedListLen(linkedListHead)>ht->size) return -1;
+    while (linkedListLen(linkedListHead)>ht->size) {
+        int const res = htresize(ht);
+        if (res != 0) {
+            return -1;
+        }
+    }
 
-    Alkalmazott const *iter = *linkedListHead;
+    Alkalmazott *iter = *linkedListHead;
     while (iter) {
-        wchar_t const *nev = iter->szemelyes_adatok->nev;
-        ulong const nevLen = wcslen(nev);
-
-        wchar_t const *email = iter->szemelyes_adatok->email;
-        ulong const emailLen = wcslen(email);
-
-        wchar_t const *szul = iter->szemelyes_adatok->szul_datum;
-        ulong const szulLen = wcslen(szul);
-
-        wchar_t *catStr = (wchar_t*) calloc((nevLen+emailLen+szulLen+1), sizeof(wchar_t));
-        if (!catStr) return -2;
-
-        wcscpy(catStr, nev);
-        wcscat(catStr, email);
-        wcscat(catStr, szul);
-
-        uint32_t const hash = FNV1a(catStr);
+        uint32_t const hash = calculateHash(iter);
+        if (hash == 0) return -2;
         uint32_t const index = hash % ht->size;
+
+
+        iter->storedHash = hash;
 
         Alkalmazott *newNode = (Alkalmazott*) malloc(sizeof(Alkalmazott));
         if (!newNode) {
-            free(catStr);
             return -3;
         }
 
+        newNode->storedHash = hash;
         newNode->szemelyes_adatok = (SzemelyesAdat*) malloc(sizeof(SzemelyesAdat));
         newNode->munka_adatok = (MunkaAdat*) malloc(sizeof(MunkaAdat));
         newNode->penzugyi_adatok = (PenzugyiAdat*) malloc(sizeof(PenzugyiAdat));
 
         if (!newNode->szemelyes_adatok || !newNode->munka_adatok || !newNode->penzugyi_adatok) {
-            free(catStr);
             free(newNode->szemelyes_adatok);
             free(newNode->munka_adatok);
             free(newNode->penzugyi_adatok);
@@ -105,7 +99,6 @@ int htinsert(HashTable const *ht, Alkalmazott **linkedListHead) {
         newNode->kov = ht->buckets[index];
         ht->buckets[index] = newNode;
 
-        free(catStr);
         iter = iter->kov;
     }
 
@@ -187,4 +180,96 @@ void htfree(HashTable *ht) {
 
     // HashTable felszabadítása
     free(ht);
+}
+
+int htresize(HashTable *ht) {
+    size_t const oldSize = ht->size;
+    size_t const newSize = oldSize * 2;
+
+    Alkalmazott **new_buckets = (Alkalmazott**) calloc(newSize, sizeof(Alkalmazott*));
+
+    if (!new_buckets)
+        return -1;
+
+    for (size_t i = 0; i < oldSize; i++) {
+        Alkalmazott *current = ht->buckets[i];
+
+        while (current != NULL) {
+            Alkalmazott *next = current->kov;
+
+            uint32_t const newHash = current->storedHash;
+            uint32_t const newIndex = newHash % newSize;
+
+            current->kov = new_buckets[newIndex];
+            new_buckets[newIndex] = current;
+
+            current = next;
+
+        }
+    }
+
+    free(ht->buckets);
+
+    ht->buckets = new_buckets;
+    ht->size = newSize;
+    return 0;
+}
+
+uint32_t calculateHash(Alkalmazott const *alkalmazott) {
+    wchar_t const *nev = alkalmazott->szemelyes_adatok->nev;
+    size_t const nevLen = wcslen(nev);
+
+    wchar_t const *email = alkalmazott->szemelyes_adatok->email;
+    size_t const emailLen = wcslen(email);
+
+    wchar_t const *szul = alkalmazott->szemelyes_adatok->szul_datum;
+    size_t const szulLen = wcslen(szul);
+
+    wchar_t *catStr = (wchar_t*) calloc((nevLen+emailLen+szulLen+1), sizeof(wchar_t));
+    if (!catStr) return 0;
+
+    wcscpy(catStr, nev);
+    wcscat(catStr, email);
+    wcscat(catStr, szul);
+
+    uint32_t const hash = FNV1a(catStr);
+    free(catStr);
+    return hash;
+}
+
+int htdelete(HashTable *ht, Alkalmazott const *target) {
+    if (!ht || !target) return -1;
+
+    uint32_t const hash = calculateHash(target);
+    if (hash==0) return -1;
+
+    uint32_t const index = hash % ht->size;
+
+    Alkalmazott *current = ht->buckets[index];
+    Alkalmazott *prev = NULL;
+
+    while (current != NULL) {
+        if (wcscmp(current->szemelyes_adatok->nev, target->szemelyes_adatok->nev) == 0 &&
+                wcscmp(current->szemelyes_adatok->email, target->szemelyes_adatok->email) == 0 &&
+                wcscmp(current->szemelyes_adatok->szul_datum, target->szemelyes_adatok->szul_datum) == 0) {
+
+            // Láncolás javítása
+            if (prev == NULL) {
+                ht->buckets[index] = current->kov; // A lista elejét töröljük
+            } else {
+                prev->kov = current->kov; // A lista közepéről/végéről töröljük
+            }
+
+            // Memória felszabadítása
+            free(current->szemelyes_adatok);
+            free(current->munka_adatok);
+            free(current->penzugyi_adatok);
+            free(current);
+            return 0; // Siker
+                }
+
+        prev = current;
+        current = current->kov;
+    }
+    return -1;
 }

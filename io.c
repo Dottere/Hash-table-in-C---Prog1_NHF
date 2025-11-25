@@ -289,7 +289,7 @@ Alkalmazott *readFromInput(void) {
 void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize) {
     char buff[256]; // Lokális buffer, nem kell átadni kívülről
 
-    wprintf(L"%ls", (const unsigned short *)prompt);
+    wprintf(L"%ls", prompt);
     fflush(stdout);
 
     if (fgets(buff, sizeof(buff), stdin) != NULL) {
@@ -303,4 +303,54 @@ void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize) 
         // Biztonsági lezárás, ha a mbstowcs esetleg pont teleírta volna
         dest[destSize - 1] = L'\0';
     }
+}
+
+int writeToCSV(HashTable *ht, char const *path) {
+    if (!ht || !path) return -1;
+
+    FILE *fp = fopen(path, "w");
+    if (!fp) {
+        perror("Nem sikerült megnyitni a fájlt!");
+        return -2;
+    }
+
+    // BOM - Byte Order Mark, jelzi az UTF-8 kódolást
+    fprintf(fp, "\xEF\xBB\xBF");
+
+    fprintf(fp, "ID,Nev,SzulDatum,Nem,Lakhely,Email,Telefon,SzemelyiSzam,"
+                "Beosztas,Reszleg,Felettes,Munkakezdet,Munkavege,Munkarend,"
+                "Bankszamla,Fizetes\n");
+
+    for (size_t i = 0; i < ht->size; i++) {
+        Alkalmazott *current = ht->buckets[i];
+
+        while (current != NULL) {
+            if (current->szemelyes_adatok && current->munka_adatok && current->penzugyi_adatok) {
+                fprintf(fp, "%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls\n",
+                    // Személyes
+                    current->szemelyes_adatok->id,
+                    current->szemelyes_adatok->nev,
+                    current->szemelyes_adatok->szul_datum,
+                    current->szemelyes_adatok->nem,
+                    current->szemelyes_adatok->lakhely,
+                    current->szemelyes_adatok->email,
+                    current->szemelyes_adatok->telefon,
+                    current->szemelyes_adatok->szemelyi_szam,
+                    // Munka
+                    current->munka_adatok->beosztas,
+                    current->munka_adatok->reszleg,
+                    current->munka_adatok->felettes,
+                    current->munka_adatok->munkakezdet,
+                    current->munka_adatok->munkavege,
+                    current->munka_adatok->munkarend,
+                    // Pénzügyi
+                    current->penzugyi_adatok->bankszamla,
+                    current->penzugyi_adatok->fizetes
+                );
+            }
+            current = current->kov;
+        }
+    }
+    fclose(fp);
+    return 0;
 }

@@ -21,6 +21,7 @@ int main(void) {
     bool run = true;
 
     HashTable *ht = NULL;
+    Alkalmazott *linkedList = NULL;
     char *path = NULL;
 
     printHelp();
@@ -62,14 +63,14 @@ int main(void) {
                 wprintf(L"A beolvasást választottad! Kérlek add meg a beolvasandó fájl elérési útvonalát: ");
                     path = readPath();
                 while (!pathExists(path)){
-                        wprintf(L"Ilyen elérési út nem létezik:\"%hs\"\n", path);
+                        printf("Ilyen elérési út nem létezik:\"%s\"\n", path);
                         wprintf(L"Elérési út: ");
                         free(path);
                         path = readPath();
                 }
 
-                wprintf(L"Beolvasás CSV-ből láncolt listába...\n"); sleep(1);
-                Alkalmazott *linkedList = readFromCSV(path);
+                wprintf(L"Beolvasás CSV-ből láncolt listába...\n");
+                linkedList = readFromCSV(path);
 
                 if (!linkedList) {
                     wprintf(L"Hiba történt az adatok beolvasásakor, a láncolt lista nem jött létre. A program kilép");
@@ -84,7 +85,7 @@ int main(void) {
                     return -1;
                 }
 
-                wprintf(L"Beszúrás a Hash-Táblába...\n"); sleep(1);
+                wprintf(L"Beszúrás a Hash-Táblába...\n");
                 int const result = htinsert(ht, &linkedList);
 
                 if (result != 0) {
@@ -97,6 +98,7 @@ int main(void) {
                     linkedList = NULL;
                     return -1;
                 }
+                linkedListFree(&linkedList);
 
                 wprintf(L"✓ Beszúrás sikeres!\n");
                 break;
@@ -116,15 +118,39 @@ int main(void) {
                 }
                 break;
             case 4:
-                if (!ht) {
+                if (ht)
+                    howToModify(ht, path);
+                else {
                     wprintf(L"Hash-Tábla nem létezik, először olvass be egyet fájlból! (1)");
-                    break;
                 }
-                howToModify(ht, path);
-
                 break;
             case 5:
-                sleep(1);
+                if (!ht) {
+                    wprintf(L"Nincs beolvasva HashTábla, nem lehet adatot kiírni!");
+                    break;
+                }
+
+                wprintf(L"Add meg a célfájl elérési útját! (pl export.csv): ");
+                char *outPath = readPath();
+
+                if (pathExists(outPath)) {
+                    if (!confirmOverwrite(outPath)) {
+                        free(outPath);
+                        wprintf(L"A kiírás megszakítva!\n");
+                        break;
+                    }
+                }
+
+                wprintf(L"Fájl írása: %s ...\n", outPath);
+
+                int const writeRes = writeToCSV(ht, outPath);
+
+                if (writeRes == 0) {
+                    wprintf(L"Sikeres kiírás!\n");
+                } else {
+                    wprintf(L"Hiba történt a fájl írásakor! Hibakód: %d\n", writeRes);
+                }
+                free(outPath);
                 break;
 
             case 6:

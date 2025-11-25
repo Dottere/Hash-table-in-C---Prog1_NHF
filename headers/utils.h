@@ -13,7 +13,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <wchar.h>
-#include <unistd.h>
 
 void printHelp(void);
 void statistics(HashTable *ht);
