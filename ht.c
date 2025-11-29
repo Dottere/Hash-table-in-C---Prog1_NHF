@@ -96,8 +96,20 @@ int htinsert(HashTable *ht, Alkalmazott **linkedListHead) {
         memcpy(newNode->munka_adatok, iter->munka_adatok, sizeof(MunkaAdat));
         memcpy(newNode->penzugyi_adatok, iter->penzugyi_adatok, sizeof(PenzugyiAdat));
 
-        newNode->kov = ht->buckets[index];
-        ht->buckets[index] = newNode;
+        newNode->kov = NULL;
+
+        if (ht->buckets[index] == NULL) {
+
+            ht->buckets[index] = newNode;
+        } else {
+
+            Alkalmazott *current = ht->buckets[index];
+            while (current->kov != NULL) {
+                current = current->kov;
+            }
+
+            current->kov = newNode;
+        }
 
         iter = iter->kov;
     }
@@ -166,10 +178,7 @@ void htfree(HashTable *ht) {
             Alkalmazott *next = current->kov;
 
             // Belső struktúrák felszabadítása
-            free(current->szemelyes_adatok);
-            free(current->munka_adatok);
-            free(current->penzugyi_adatok);
-            free(current);
+            freeNode(current);
 
             current = next;
         }
@@ -216,21 +225,19 @@ int htresize(HashTable *ht) {
 }
 
 uint32_t calculateHash(Alkalmazott const *alkalmazott) {
-    wchar_t const *nev = alkalmazott->szemelyes_adatok->nev;
-    size_t const nevLen = wcslen(nev);
-
     wchar_t const *email = alkalmazott->szemelyes_adatok->email;
-    size_t const emailLen = wcslen(email);
-
     wchar_t const *szul = alkalmazott->szemelyes_adatok->szul_datum;
-    size_t const szulLen = wcslen(szul);
+    wchar_t const *id = alkalmazott->szemelyes_adatok->id;
 
-    wchar_t *catStr = (wchar_t*) calloc((nevLen+emailLen+szulLen+1), sizeof(wchar_t));
+    size_t const len = wcslen(email) + 1 + wcslen(szul) + 1 + wcslen(id) + 1;
+    wchar_t *catStr = (wchar_t*) calloc(len, sizeof(wchar_t));
     if (!catStr) return 0;
 
-    wcscpy(catStr, nev);
-    wcscat(catStr, email);
+    wcscpy(catStr, email);
+    wcscat(catStr, L" ");
     wcscat(catStr, szul);
+    wcscat(catStr, L" ");
+    wcscat(catStr, id);
 
     uint32_t const hash = FNV1a(catStr);
     free(catStr);
@@ -249,27 +256,144 @@ int htdelete(HashTable *ht, Alkalmazott const *target) {
     Alkalmazott *prev = NULL;
 
     while (current != NULL) {
-        if (wcscmp(current->szemelyes_adatok->nev, target->szemelyes_adatok->nev) == 0 &&
+        if (wcscmp(current->szemelyes_adatok->id, target->szemelyes_adatok->id) == 0 &&
                 wcscmp(current->szemelyes_adatok->email, target->szemelyes_adatok->email) == 0 &&
                 wcscmp(current->szemelyes_adatok->szul_datum, target->szemelyes_adatok->szul_datum) == 0) {
 
-            // Láncolás javítása
+
             if (prev == NULL) {
-                ht->buckets[index] = current->kov; // A lista elejét töröljük
+                ht->buckets[index] = current->kov;
             } else {
-                prev->kov = current->kov; // A lista közepéről/végéről töröljük
+                prev->kov = current->kov;
             }
 
-            // Memória felszabadítása
+
             free(current->szemelyes_adatok);
             free(current->munka_adatok);
             free(current->penzugyi_adatok);
             free(current);
-            return 0; // Siker
+            return 0;
                 }
 
         prev = current;
         current = current->kov;
     }
     return -1;
+}
+
+bool htfind(HashTable const *ht, Alkalmazott const *target) {
+
+    uint32_t const hash = calculateHash(target);
+
+    if (hash) {
+        size_t const index = hash % ht->size;
+
+        Alkalmazott const *iter = ht->buckets[index];
+
+        while (iter != NULL) {
+
+            if (wcscmp(iter->szemelyes_adatok->id, target->szemelyes_adatok->id) == 0 &&
+                wcscmp(iter->szemelyes_adatok->email, target->szemelyes_adatok->email) == 0 &&
+                wcscmp(iter->szemelyes_adatok->szul_datum, target->szemelyes_adatok->szul_datum) == 0) {
+
+                SzemelyesAdat *sz = iter->szemelyes_adatok;
+                MunkaAdat *m      = iter->munka_adatok;
+                PenzugyiAdat *p   = iter->penzugyi_adatok;
+
+                wprintf(L"A keresett személy megtalálva!\n"
+                        "ID: %ls\nNév: %ls\nSzületési dátum: %ls\nNem: %ls\nLakhely: %ls\nE-Mail: %ls\n"
+                        "Telefon: %ls\nSzemélyi szám: %ls\nBeosztás: %ls\nRészleg: %ls\nFelettes: %ls\nMunkakezdet: %ls\n"
+                        "Munkavége: %ls\nMunkarend: %ls\nBankszámlaszám: %ls\nFizetés: %ls\n",
+                        sz->id, sz->nev, sz->szul_datum, sz->nem, sz->lakhely, sz->email, sz->telefon, sz->szemelyi_szam,
+                        m->beosztas, m->reszleg, m->felettes, m->munkakezdet, m->munkavege, m->munkarend,
+                        p->bankszamla, p->fizetes);
+                return true;
+            }
+
+            iter = iter->kov;
+        }
+
+    }
+
+    return false;
+}
+
+
+bool htupdate(HashTable *ht, Alkalmazott *target, int const fieldType, wchar_t const *newValue) {
+    if (!ht || !target) return false;
+
+    Alkalmazott *foundNode = inHt(ht, target);
+
+    if (!foundNode) return false;
+
+    if (fieldType == 2 || fieldType == 3 || fieldType == 6) {
+        Alkalmazott *tempCopy = (Alkalmazott*)malloc(sizeof(Alkalmazott));
+        if (!tempCopy) return false;
+
+        tempCopy->szemelyes_adatok = (SzemelyesAdat*) malloc(sizeof(SzemelyesAdat));
+        tempCopy->munka_adatok     = (MunkaAdat*) malloc(sizeof(MunkaAdat));
+        tempCopy->penzugyi_adatok  = (PenzugyiAdat*) malloc(sizeof(PenzugyiAdat));
+
+        if (!tempCopy->szemelyes_adatok || !tempCopy->munka_adatok || !tempCopy->penzugyi_adatok) {
+            freeNode(tempCopy);
+            return false;
+        }
+
+        *tempCopy->szemelyes_adatok = *foundNode->szemelyes_adatok;
+        *tempCopy->munka_adatok     = *foundNode->munka_adatok;
+        *tempCopy->penzugyi_adatok  = *foundNode->penzugyi_adatok;
+        tempCopy->kov               = NULL;
+
+        if (fieldType == 2) wcscpy(tempCopy->szemelyes_adatok->szul_datum, newValue);
+        else if (fieldType == 3) wcscpy(tempCopy->szemelyes_adatok->id, newValue);
+        else wcscpy(tempCopy->szemelyes_adatok->email, newValue);
+
+        htdelete(ht, target);
+        htinsert(ht, &tempCopy);
+
+        freeNode(tempCopy);
+    }
+
+    else {
+        switch (fieldType) {
+            case 1: wcscpy(foundNode->szemelyes_adatok->nev, newValue); break;
+            case 4: wcscpy(foundNode->szemelyes_adatok->nem, newValue); break;
+            case 5: wcscpy(foundNode->szemelyes_adatok->lakhely, newValue); break;
+            case 7: wcscpy(foundNode->szemelyes_adatok->telefon, newValue); break;
+            case 8: wcscpy(foundNode->szemelyes_adatok->szemelyi_szam, newValue); break;
+
+            case 9: wcscpy(foundNode->munka_adatok->beosztas, newValue); break;
+            case 10: wcscpy(foundNode->munka_adatok->reszleg, newValue); break;
+            case 11: wcscpy(foundNode->munka_adatok->felettes, newValue); break;
+            case 12: wcscpy(foundNode->munka_adatok->munkakezdet, newValue); break;
+            case 13: wcscpy(foundNode->munka_adatok->munkavege, newValue); break;
+            case 14: wcscpy(foundNode->munka_adatok->munkarend, newValue); break;
+
+            case 15: wcscpy(foundNode->penzugyi_adatok->bankszamla, newValue); break;
+            case 16: wcscpy(foundNode->penzugyi_adatok->fizetes, newValue); break;
+            default: return false;
+        }
+    }
+
+    return true;
+}
+
+Alkalmazott *inHt(HashTable const *ht, Alkalmazott const *target) {
+    uint32_t const hash = calculateHash(target);
+    size_t const index = hash % ht->size;
+    Alkalmazott *iter = ht->buckets[index];
+    Alkalmazott *foundNode = NULL;
+
+    while (iter) {
+        if (wcscmp(iter->szemelyes_adatok->email, target->szemelyes_adatok->email)           == 0 &&
+            wcscmp(iter->szemelyes_adatok->id, target->szemelyes_adatok->id)                 == 0 &&
+            wcscmp(iter->szemelyes_adatok->szul_datum, target->szemelyes_adatok->szul_datum) == 0) {
+            foundNode = iter;
+            break;
+            }
+        iter = iter->kov;
+    }
+
+    if (!foundNode) return NULL;
+    return foundNode;
 }

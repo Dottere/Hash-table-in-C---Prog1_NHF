@@ -23,5 +23,6 @@ char *readPath(void);
 bool pathExists(const char *path);
 void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize);
 int writeToCSV(HashTable *ht, char const *path);
+void printField(FILE *fp, wchar_t *str, char *suffix);
 
 #endif //PROGRAMMING1_NAGYHF_IO_H

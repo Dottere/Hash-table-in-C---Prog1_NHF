@@ -66,16 +66,21 @@ void linkedListRemove(Alkalmazott **head, Alkalmazott *element) {
     }
 }
 
+void freeNode(Alkalmazott *node) {
+    if (!node) return;
+    free(node->szemelyes_adatok);
+    free(node->munka_adatok);
+    free(node->penzugyi_adatok);
+    free(node);
+}
+
 void linkedListFree(Alkalmazott **head) {
     if (!head || !*head) return;
 
     Alkalmazott *iter = *head;
     while (iter != NULL) {
         Alkalmazott *next = iter->kov;
-        free(iter->szemelyes_adatok);
-        free(iter->munka_adatok);
-        free(iter->penzugyi_adatok);
-        free(iter);
+        freeNode(iter);
         iter = next;
     }
     *head = NULL;
@@ -107,10 +112,3 @@ int linkedListLen(Alkalmazott **head) {
     return cnt;
 }
 
-void freeNode(Alkalmazott *node) {
-    if (!node) return;
-    free(node->szemelyes_adatok);
-    free(node->munka_adatok);
-    free(node->penzugyi_adatok);
-    free(node);
-}

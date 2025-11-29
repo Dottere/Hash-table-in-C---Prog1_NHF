@@ -21,7 +21,6 @@ int main(void) {
     bool run = true;
 
     HashTable *ht = NULL;
-    Alkalmazott *linkedList = NULL;
     char *path = NULL;
 
     printHelp();
@@ -60,104 +59,63 @@ int main(void) {
                     path = NULL;
                 }
 
-                wprintf(L"A beolvasást választottad! Kérlek add meg a beolvasandó fájl elérési útvonalát: ");
-                    path = readPath();
-                while (!pathExists(path)){
-                        printf("Ilyen elérési út nem létezik:\"%s\"\n", path);
-                        wprintf(L"Elérési út: ");
-                        free(path);
-                        path = readPath();
-                }
-
-                wprintf(L"Beolvasás CSV-ből láncolt listába...\n");
-                linkedList = readFromCSV(path);
-
-                if (!linkedList) {
-                    wprintf(L"Hiba történt az adatok beolvasásakor, a láncolt lista nem jött létre. A program kilép");
-                    break;
-                }
-
-                wprintf(L"Hash-Tábla létrehozása %d elemszámmal...\n", linkedListLen(&linkedList));
-                ht = htcreate(linkedListLen(&linkedList));
-                if (!ht) {
-                    wprintf(L"Nem sikerült a Hash-Táblának memóriát foglalni. A program kilép.");
-                    free(path);
+                int const res = readingFromFile(&ht, &path);
+                if (res != 0) {
                     return -1;
                 }
-
-                wprintf(L"Beszúrás a Hash-Táblába...\n");
-                int const result = htinsert(ht, &linkedList);
-
-                if (result != 0) {
-                    wprintf(L"✗ Beszúrás sikertelen! Hibakód: %d\n", result);
-                    free(path);
-                    path = NULL;
-                    htfree(ht);
-                    linkedListFree(&linkedList);
-                    ht = NULL;
-                    linkedList = NULL;
-                    return -1;
-                }
-                linkedListFree(&linkedList);
 
                 wprintf(L"✓ Beszúrás sikeres!\n");
                 break;
-
             case 2:
+                if (!ht) {
+                    wprintf(L"Nincs beolvasva HashTábla, nem lehet adatot kiírni!");
+                    break;
+                }
+                searchInHashTable(&ht);
+                break;
+            case 3:
                 if (ht)
                     printHashTable(ht);
                 else {
                     wprintf(L"Hash-Tábla nem létezik, először olvass be egyet fájlból! (1)");
                 }
                 break;
-            case 3:
+            case 4:
                 if (ht)
                     statistics(ht);
                 else {
                     wprintf(L"Hash-Tábla nem létezik, először olvass be egyet fájlból! (1)");
                 }
                 break;
-            case 4:
+            case 5:
                 if (ht)
                     howToModify(ht, path);
                 else {
                     wprintf(L"Hash-Tábla nem létezik, először olvass be egyet fájlból! (1)");
                 }
                 break;
-            case 5:
+            case 6:
                 if (!ht) {
                     wprintf(L"Nincs beolvasva HashTábla, nem lehet adatot kiírni!");
                     break;
                 }
 
-                wprintf(L"Add meg a célfájl elérési útját! (pl export.csv): ");
-                char *outPath = readPath();
-
-                if (pathExists(outPath)) {
-                    if (!confirmOverwrite(outPath)) {
-                        free(outPath);
-                        wprintf(L"A kiírás megszakítva!\n");
-                        break;
-                    }
-                }
-
-                wprintf(L"Fájl írása: %s ...\n", outPath);
-
-                int const writeRes = writeToCSV(ht, outPath);
-
-                if (writeRes == 0) {
-                    wprintf(L"Sikeres kiírás!\n");
-                } else {
-                    wprintf(L"Hiba történt a fájl írásakor! Hibakód: %d\n", writeRes);
-                }
-                free(outPath);
+                writeToFile(&ht);
                 break;
 
-            case 6:
-                wprintf(L"A program kilép.\n");
-                htfree(ht);
-                linkedListFree(&linkedList);
-                run = false;
+            case 7:
+                wprintf(L"\nBiztosan ki akarsz lépni?\n1. Igen\n2.Nem\nVálasztás: ");
+                if (!fgets(choice, 16, stdin)) break;
+                if (choice[0] == '1') {
+                    wprintf(L"A program kilép.\n");
+                    htfree(ht);
+                    run = false;
+                    break;
+                }
+                if (choice[0] == '2') {
+                    break;
+                }
+                wprintf(L"Helytelen opció!\n");
                 break;
 
             default:
@@ -171,4 +129,5 @@ int main(void) {
     }
     return 0;
 }
+
 

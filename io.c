@@ -34,7 +34,6 @@ Alkalmazott *readFromCSV(char const *filePath) {
     Alkalmazott *linkedList = NULL;
     char buff[1024];
 
-    // get rid of first line and checks if file is empty or not
     if (!fgets(buff, sizeof(buff), fp)) {
         fclose(fp);
         return NULL;
@@ -182,7 +181,7 @@ char *readPath(void) {
         }
         buff[len++] = (char) c;
     }
-    buff[len] = L'\0';
+    buff[len] = '\0';
     return buff;
 }
 
@@ -326,31 +325,49 @@ int writeToCSV(HashTable *ht, char const *path) {
 
         while (current != NULL) {
             if (current->szemelyes_adatok && current->munka_adatok && current->penzugyi_adatok) {
-                fprintf(fp, "%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls,%ls\n",
-                    // Személyes
-                    current->szemelyes_adatok->id,
-                    current->szemelyes_adatok->nev,
-                    current->szemelyes_adatok->szul_datum,
-                    current->szemelyes_adatok->nem,
-                    current->szemelyes_adatok->lakhely,
-                    current->szemelyes_adatok->email,
-                    current->szemelyes_adatok->telefon,
-                    current->szemelyes_adatok->szemelyi_szam,
-                    // Munka
-                    current->munka_adatok->beosztas,
-                    current->munka_adatok->reszleg,
-                    current->munka_adatok->felettes,
-                    current->munka_adatok->munkakezdet,
-                    current->munka_adatok->munkavege,
-                    current->munka_adatok->munkarend,
-                    // Pénzügyi
-                    current->penzugyi_adatok->bankszamla,
-                    current->penzugyi_adatok->fizetes
-                );
+
+                printField(fp, current->szemelyes_adatok->id, ",");
+                printField(fp, current->szemelyes_adatok->nev, ",");
+                printField(fp, current->szemelyes_adatok->szul_datum, ",");
+                printField(fp, current->szemelyes_adatok->nem, ",");
+                printField(fp, current->szemelyes_adatok->lakhely, ",");
+                printField(fp, current->szemelyes_adatok->email, ",");
+                printField(fp, current->szemelyes_adatok->telefon, ",");
+                printField(fp, current->szemelyes_adatok->szemelyi_szam, ",");
+
+                printField(fp, current->munka_adatok->beosztas, ",");
+                printField(fp, current->munka_adatok->reszleg, ",");
+                printField(fp, current->munka_adatok->felettes, ",");
+                printField(fp, current->munka_adatok->munkakezdet, ",");
+                printField(fp, current->munka_adatok->munkavege, ",");
+                printField(fp, current->munka_adatok->munkarend, ",");
+
+                printField(fp, current->penzugyi_adatok->bankszamla, ",");
+                // Note: The last one uses "\n" instead of ","
+                printField(fp, current->penzugyi_adatok->fizetes, "\n");
             }
             current = current->kov;
         }
     }
     fclose(fp);
     return 0;
+}
+
+void printField(FILE *fp, wchar_t *str, char *suffix) {
+    if (!str) {
+        fprintf(fp, "%s", suffix);
+        return;
+    }
+
+    // Get the length needed for conversion
+    size_t len = wcstombs(NULL, str, 0);
+    if (len == (size_t)-1) return;
+
+    // Allocate memory, convert, print, and free
+    char *buffer = (char *)malloc(len + 1);
+    if (buffer) {
+        wcstombs(buffer, str, len + 1);
+        fprintf(fp, "%s%s", buffer, suffix);
+        free(buffer);
+    }
 }

@@ -15,8 +15,15 @@
 #include <wchar.h>
 
 void printHelp(void);
-void statistics(HashTable *ht);
-bool confirmOverwrite(const char *path);
+int readingFromFile(HashTable **ht, char **path);
+void searchInHashTable(HashTable **ht);
+void statistics(HashTable const *ht);
 void howToModify(HashTable *ht, char const *path);
+void addLogic(HashTable *ht, char const *path, char *choice);
+void delLogic(HashTable *ht);
+void updateLogic(HashTable *ht, char *choice);
+void writeToFile(HashTable **ht);
+
+bool confirmOverwrite(const char *path);
 
 #endif //PROGRAMMING1_NAGYHF_UTILS_H
