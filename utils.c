@@ -3,7 +3,13 @@
 //
 
 #include "headers/utils.h"
+#include "headers/datastructs.h"
+#include "headers/linkedlist.h"
+#include "headers/io.h"
+#include "headers/debugmalloc.h"
 
+#include <wchar.h>
+#include <stdbool.h>
 
 void printHelp(void) {
     wprintf(L"A program mely funkcionalitását szeretnéd használni?\n");
@@ -21,11 +27,10 @@ void printHelp(void) {
 int readingFromFile(HashTable **ht, char **path) {
     wprintf(L"A beolvasást választottad! Kérlek add meg a beolvasandó fájl elérési útvonalát: ");
     *path = readPath();
-    while (!pathExists(*path)){
+    if (!pathExists(*path)){
         wprintf(L"Ilyen elérési út nem létezik:\"%s\"\n", *path);
-        wprintf(L"Elérési út: ");
         free(*path);
-        *path = readPath();
+        return -1;
     }
 
     wprintf(L"Beolvasás CSV-ből láncolt listába...\n");
@@ -33,6 +38,8 @@ int readingFromFile(HashTable **ht, char **path) {
 
     if (!linkedList) {
         wprintf(L"Hiba történt az adatok beolvasásakor, a láncolt lista nem jött létre. A program kilép");
+        free(*path);
+        *path=NULL;
         return -1;
     }
 
@@ -114,11 +121,11 @@ void statistics(HashTable const *ht) {
 bool confirmOverwrite(const char *path) {
     char choice[16];
     while (true) {
-        wprintf(L"A fájl (\"%hs\") már létezik...\n Szeretnéd felülírni?\n[i] - igen\n[n] - nem\nVálasz: ", path);
+        wprintf(L"A fájl (\"%hs\") már létezik...\n Szeretnéd felülírni?\n1. Igen\n2. Nem\nVálasz: ", path);
         if (!fgets(choice, sizeof(choice), stdin)) return false;
 
-        if (choice[0] == 'n' || choice[0] == 'N') return false;
-        if (choice[0] == 'i' || choice[0] == 'I') return true;
+        if (choice[0] == '1') return true;
+        if (choice[0] == '2') return false;
 
         wprintf(L"Érvénytelen választás.\n");
     }
@@ -176,10 +183,10 @@ void addLogic(HashTable *ht, char const *path, char *choice) {
 
         char *newPath = readPath();
 
-        while (!pathExists(newPath)){
+        if (!pathExists(newPath)){
             wprintf(L"Nem létező fájl:\"%hs\"\nÚjra: ", newPath);
             free(newPath);
-            newPath = readPath();
+            return;
         }
 
         if (path && strcmp(path, newPath) == 0) {
@@ -207,38 +214,38 @@ void addLogic(HashTable *ht, char const *path, char *choice) {
 
 
 void delLogic(HashTable *ht) {
-    Alkalmazott *dummy = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
-    dummy->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
+    Alkalmazott *temp = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
+    temp->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
 
     wprintf(L"Ahhoz, hogy törölj a táblából szükségünk van három dologra:\n");
 
-    readFromInputHelper(L"ID: ", dummy->szemelyes_adatok->id, 16);
-    readFromInputHelper(L"E-Mail: ", dummy->szemelyes_adatok->email, 64);
-    readFromInputHelper(L"Születési dátum: ", dummy->szemelyes_adatok->id, 24);
+    readFromInputHelper(L"ID: ", temp->szemelyes_adatok->id, 16);
+    readFromInputHelper(L"E-Mail: ", temp->szemelyes_adatok->email, 64);
+    readFromInputHelper(L"Születési dátum: ", temp->szemelyes_adatok->szul_datum, 24);
 
-    if (htdelete(ht, dummy)==0)
+    if (htdelete(ht, temp)==0)
         wprintf(L"Sikeres törlés!");
     else
         wprintf(L"Nem található a listában a megadott elem!");
 
 
-    free(dummy->szemelyes_adatok);
-    free(dummy);
+    free(temp->szemelyes_adatok);
+    free(temp);
 }
 
 
 void updateLogic(HashTable *ht, char *choice) {
-    Alkalmazott *dummy = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
-    dummy->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
+    Alkalmazott *temp = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
+    temp->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
 
     wprintf(L"\n--- Módosítás ---\nKinek az adatait szeretnéd módosítani? (Azonosítók)\n");
 
-    readFromInputHelper(L"ID: ", dummy->szemelyes_adatok->id, 16);
-    readFromInputHelper(L"E-Mail: ", dummy->szemelyes_adatok->email, 64);
-    readFromInputHelper(L"Születési dátum: ", dummy->szemelyes_adatok->szul_datum, 24);
+    readFromInputHelper(L"ID: ", temp->szemelyes_adatok->id, 16);
+    readFromInputHelper(L"E-Mail: ", temp->szemelyes_adatok->email, 64);
+    readFromInputHelper(L"Születési dátum: ", temp->szemelyes_adatok->szul_datum, 24);
 
-    if (!htfind(ht, dummy)) {
-        freeNode(dummy);
+    if (!htfind(ht, temp)) {
+        freeNode(temp);
         return;
     }
 
@@ -248,25 +255,25 @@ void updateLogic(HashTable *ht, char *choice) {
     wprintf(L"9. Beosztás\n10. Részleg\n11. Felettes\n12. Munkakezdet\n");
     wprintf(L"13. Munkavége\n14. Munkarend\n15. Bankszámlaszám\n16. Fizetés\n");
     wprintf(L"Választás (szám): ");
-    if (!fgets(choice, 16, stdin)) { freeNode(dummy); return; }
+    if (!fgets(choice, 16, stdin)) { freeNode(temp); return; }
 
     int const fieldType = (int) strtol(choice, NULL, 10);
     if (fieldType < 1 || fieldType > 16) {
         wprintf(L"Érvénytelen mező!\n");
-        freeNode(dummy);
+        freeNode(temp);
         return;
     }
 
     wchar_t newValue[128];
     readFromInputHelper(L"Új érték: ", newValue, 128);
 
-    if (htupdate(ht, dummy, fieldType, newValue)) {
+    if (htupdate(ht, temp, fieldType, newValue)) {
         wprintf(L"✓ Sikeres módosítás!\n");
     } else {
         wprintf(L"✗ Hiba! Sikertelen módosítás.\n");
     }
 
-    freeNode(dummy);
+    freeNode(temp);
 }
 
 
@@ -292,4 +299,59 @@ void writeToFile(HashTable **ht) {
         wprintf(L"Hiba történt a fájl írásakor! Hibakód: %d\n", writeRes);
     }
     free(outPath);
+}
+
+int readMenuChoice(void) {
+    char choice[16];
+    wprintf(L"\nVálasztás: ");
+    if (!fgets(choice, sizeof(choice), stdin)) {
+        return -1;
+    }
+
+    choice[strcspn(choice, "\n")] = '\0';
+
+    if (strlen(choice) == 0) return -1;
+
+    char *endptr;
+    long const val = strtol(choice, &endptr, 10);
+
+    if (choice == endptr) return -1;
+
+    return (int)val;
+}
+
+void handleLoadOption(HashTable **ht, char **path) {
+    if (*ht) {
+        if (!confirmOverwrite(*path)) return;
+        free(*path);
+        *path = NULL;
+        htfree(*ht);
+        *ht = NULL;
+    }
+
+    int const res = readingFromFile(ht, path);
+    if (res == 0)
+        wprintf(L"✓ Beszúrás sikeres!\n");
+}
+
+bool ensureTableExists(HashTable *ht) {
+    if (!ht) {
+        wprintf(L"Nincs beolvasva HashTábla, nem lehet adatot kiírni/módosítani! (Használd az 1-es gombot)\n");
+        return false;
+    }
+    return true;
+}
+
+bool confirmExit(void) {
+    wprintf(L"\nBiztosan ki akarsz lépni?\n1. Igen\n2. Nem\nVálasztás: ");
+
+    char choice[16];
+    if (!fgets(choice, sizeof(choice), stdin)) return false;
+
+    if (choice[0] == '1') {
+        wprintf(L"A program kilép.\n");
+        return true;
+    }
+
+    return false;
 }

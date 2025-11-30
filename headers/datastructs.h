@@ -5,7 +5,8 @@
 #ifndef PROGRAMMING1_NAGYHF_DATASTRUCTS_H
 #define PROGRAMMING1_NAGYHF_DATASTRUCTS_H
 
-#include <stdlib.h>
+
+#include <stddef.h>
 #include <stdint.h>
 
 typedef struct {

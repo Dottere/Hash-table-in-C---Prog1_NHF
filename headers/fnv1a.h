@@ -5,7 +5,7 @@
 #ifndef PROGRAMMING1_NAGYHF_FNV1A_H
 #define PROGRAMMING1_NAGYHF_FNV1A_H
 
-#include "debugmalloc.h"
+#include <stddef.h>
 #include <stdint.h>
 
 #define FNV_OFFSET 2166136261u

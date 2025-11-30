@@ -6,27 +6,9 @@
 #define PROGRAMMING1_NAGYHF_IO_H
 
 #include "datastructs.h"
-#include "debugmalloc.h"
-#include "linkedlist.h"
-
-
-#include <stdio.h>
-#include <wchar.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
+#include <stdio.h>
 
-/**
- * @brief Kiírja egy CSV fájl elemeit a konzolra
- *
- * Ez egy debug függvény amely a programban nincs használva, és csak arra használatos,
- * hogy kiírja egy CSV fájl sorait a szabványos kimenetre.
- *
- * @param filePath Az a csv fájl amelynek az elemeit ki szeretnénk írni a konzolra
- * @return 0 Ha sikeres
- * @return -1 Ha nem sikerült megnyitni a fájlt
- */
-int printFromCSV(char const *filePath);
 
 /**
  * @brief Egy CSV fájlból beolavssa az elemeket egy láncolt listába
@@ -39,6 +21,8 @@ int printFromCSV(char const *filePath);
  * @return Egy láncolt listára mutató pointer mely tartalmazza a CSV fájl sorait csomópontokként
  */
 Alkalmazott *readFromCSV(char const *filePath);
+
+void readFromCSVHelper(char **input_cursor, wchar_t *dest, size_t destSize);
 
 /**
  * @brief Beolvas a szabványos bemenetről egy elérési utat
@@ -91,7 +75,7 @@ void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize);
  * @param ht A tábla melynek elemeit ki szeretnénk írni
  * @param path Az elérési út melybe írni szeretnénk
  * @return 0 Ha minden rendben
- * @return -1 ha a paraméterek valamelyike nem elérhető
+ * @return -1 Ha a paraméterek valamelyike nem elérhető
  * @return -2 Ha nem sikerült megnyitni a fájlt
  */
 int writeToCSV(HashTable *ht, char const *path);

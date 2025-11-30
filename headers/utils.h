@@ -5,14 +5,10 @@
 #ifndef PROGRAMMING1_NAGYHF_UTILS_H
 #define PROGRAMMING1_NAGYHF_UTILS_H
 
-#include "datastructs.h"
 #include "ht.h"
-#include "linkedlist.h"
-#include "io.h"
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <wchar.h>
+
+
 
 /**
  * @brief Kiírja a menüt
@@ -121,6 +117,9 @@ void updateLogic(HashTable *ht, char *choice);
  * @param ht A tábla melynek tartalmát ki szeretnénk írni
  */
 void writeToFile(HashTable **ht);
-
+int readMenuChoice(void);
+void handleLoadOption(HashTable **ht, char **path);
+bool ensureTableExists(HashTable *ht);
+bool confirmExit(void);
 
 #endif //PROGRAMMING1_NAGYHF_UTILS_H

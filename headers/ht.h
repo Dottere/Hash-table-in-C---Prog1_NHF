@@ -5,14 +5,12 @@
 #ifndef PROGRAMMING1_NAGYHF_HT_H
 #define PROGRAMMING1_NAGYHF_HT_H
 
-#include "fnv1a.h"
-#include "datastructs.h"
-#include "linkedlist.h"
 
-#include <stdlib.h>
+#include "datastructs.h"
+
 #include <stdbool.h>
 #include <inttypes.h>
-#include <wchar.h>
+
 
 /**
  * @brief Létrehoz egy Hash-Táblát amellyel képes a htinsert() függvény dolgozni

@@ -3,9 +3,11 @@
 //
 
 #include "headers/ht.h"
+#include "headers/fnv1a.h"
+#include "headers/linkedlist.h"
+#include "headers/debugmalloc.h"
 
-#include <threads.h>
-
+#include <wchar.h>
 
 HashTable *htcreate(int const initSize) {
     HashTable *ht = (HashTable*) malloc(sizeof(HashTable));

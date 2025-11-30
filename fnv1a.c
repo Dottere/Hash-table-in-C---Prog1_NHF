@@ -3,6 +3,7 @@
 //
 
 #include "headers/fnv1a.h"
+#include "headers/debugmalloc.h"
 
 uint32_t FNV1a(const wchar_t *str) {
     if (!str) return 0;

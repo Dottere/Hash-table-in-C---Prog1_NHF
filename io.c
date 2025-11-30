@@ -3,26 +3,14 @@
 //
 
 #include "headers/io.h"
+#include "headers/debugmalloc.h"
+#include "headers/linkedlist.h"
 
+#include <wchar.h>
 
+#define READ_FILE(cursor, dest) readFromCSVHelper(&cursor, dest, sizeof(dest)/sizeof(wchar_t))
+#define READ_INPUT(prompt, dest) readFromInputHelper(prompt, dest, sizeof(dest)/sizeof(wchar_t))
 
-int printFromCSV(char const *filePath) {
-    FILE *fp = fopen(filePath, "rb");
-
-    if (fp == NULL) {
-        perror("Failed to open file");
-        return -1;
-    }
-
-    char buffer[256];
-
-    while (fgets(buffer, sizeof(buffer), fp)) {
-        wprintf(L"%hs", buffer);
-    }
-
-    fclose(fp);
-    return 0;
-}
 
 
 Alkalmazott *readFromCSV(char const *filePath) {
@@ -35,32 +23,22 @@ Alkalmazott *readFromCSV(char const *filePath) {
     Alkalmazott *linkedList = NULL;
     char buff[1024];
 
-    if (!fgets(buff, sizeof(buff), fp)) {
-        fclose(fp);
-        return NULL;
-    }
+    if (!fgets(buff, sizeof(buff), fp)) { fclose(fp); return NULL; }
 
-    if (!fgets(buff, sizeof(buff), fp)) {
-        fclose(fp);
-        return NULL;
-    }
+    if (!fgets(buff, sizeof(buff), fp)) { fclose(fp); return NULL; }
+
     do {
         buff[strcspn(buff, "\r\n")] = '\0';
 
-        Alkalmazott *line = (Alkalmazott *) malloc(sizeof(Alkalmazott));
-        if (!line){
-            perror("Memory allocation failed");
-            break;
-        }
-        line->kov = NULL;
+        Alkalmazott *line = (Alkalmazott *) calloc(1, sizeof(Alkalmazott));
+        if (!line) { perror("Memory allocation failed"); break; }
 
-        line->szemelyes_adatok = (SzemelyesAdat *) malloc(sizeof(SzemelyesAdat));
-        line->munka_adatok = (MunkaAdat *) malloc(sizeof(MunkaAdat));
-        line->penzugyi_adatok = (PenzugyiAdat *) malloc(sizeof(PenzugyiAdat));
+        line->szemelyes_adatok = (SzemelyesAdat *) calloc(1, sizeof(SzemelyesAdat));
+        line->munka_adatok     = (MunkaAdat *)     calloc(1, sizeof(MunkaAdat));
+        line->penzugyi_adatok  = (PenzugyiAdat *)  calloc(1, sizeof(PenzugyiAdat));
 
         if (!line->szemelyes_adatok || !line->munka_adatok || !line->penzugyi_adatok) {
             perror("Memory allocation failed");
-            // Clean up
             free(line->szemelyes_adatok);
             free(line->munka_adatok);
             free(line->penzugyi_adatok);
@@ -68,103 +46,47 @@ Alkalmazott *readFromCSV(char const *filePath) {
             break;
         }
 
-        memset(line->szemelyes_adatok, 0, sizeof(SzemelyesAdat));
-        memset(line->munka_adatok, 0, sizeof(MunkaAdat));
-        memset(line->penzugyi_adatok, 0, sizeof(PenzugyiAdat));
+        char *cursor = buff;
 
-        char const *token = strtok(buff, ",");
+        READ_FILE(cursor, line->szemelyes_adatok->id);
+        READ_FILE(cursor, line->szemelyes_adatok->nev);
+        READ_FILE(cursor, line->szemelyes_adatok->szul_datum);
+        READ_FILE(cursor, line->szemelyes_adatok->nev);
+        READ_FILE(cursor, line->szemelyes_adatok->lakhely);
+        READ_FILE(cursor, line->szemelyes_adatok->email);
+        READ_FILE(cursor, line->szemelyes_adatok->telefon);
+        READ_FILE(cursor, line->szemelyes_adatok->szemelyi_szam);
+        READ_FILE(cursor, line->munka_adatok->beosztas);
+        READ_FILE(cursor, line->munka_adatok->reszleg);
+        READ_FILE(cursor, line->munka_adatok->felettes);
+        READ_FILE(cursor, line->munka_adatok->munkakezdet);
+        READ_FILE(cursor, line->munka_adatok->munkavege);
+        READ_FILE(cursor, line->munka_adatok->munkarend);
+        READ_FILE(cursor, line->penzugyi_adatok->bankszamla);
+        READ_FILE(cursor, line->penzugyi_adatok->fizetes);
 
-        if (token){
-            mbstowcs(line->szemelyes_adatok->id, token, sizeof(line->szemelyes_adatok->id)/sizeof(wchar_t) - 1);
-        }
+        linkedListAppend(&linkedList, line);
 
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->szemelyes_adatok->nev, token, sizeof(line->szemelyes_adatok->nev)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token){
-            mbstowcs(line->szemelyes_adatok->szul_datum, token, sizeof(line->szemelyes_adatok->szul_datum)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token){
-            mbstowcs(line->szemelyes_adatok->nem, token, sizeof(line->szemelyes_adatok->nem)/sizeof(wchar_t) - 1);
-
-        }
-
-        token = strtok(NULL, ",");
-        if (token){
-            mbstowcs(line->szemelyes_adatok->lakhely, token, sizeof(line->szemelyes_adatok->lakhely)/sizeof(wchar_t) - 1);
-
-        }
-
-        token = strtok(NULL, ",");
-        if (token){
-            mbstowcs(line->szemelyes_adatok->email, token, sizeof(line->szemelyes_adatok->email)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->szemelyes_adatok->telefon, token, sizeof(line->szemelyes_adatok->telefon)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->szemelyes_adatok->szemelyi_szam, token, sizeof(line->szemelyes_adatok->szemelyi_szam)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token){
-            mbstowcs(line->munka_adatok->beosztas, token, sizeof(line->munka_adatok->beosztas)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->munka_adatok->reszleg, token, sizeof(line->munka_adatok->reszleg)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->munka_adatok->felettes, token, sizeof(line->munka_adatok->felettes)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->munka_adatok->munkakezdet, token, sizeof(line->munka_adatok->munkakezdet)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->munka_adatok->munkavege, token, sizeof(line->munka_adatok->munkavege)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->munka_adatok->munkarend, token, sizeof(line->munka_adatok->munkarend)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->penzugyi_adatok->bankszamla, token, sizeof(line->penzugyi_adatok->bankszamla)/sizeof(wchar_t) - 1);
-        }
-
-        token = strtok(NULL, ",");
-        if (token) {
-            mbstowcs(line->penzugyi_adatok->fizetes, token, sizeof(line->penzugyi_adatok->fizetes)/sizeof(wchar_t) - 1);
-        }
-
-            linkedListAppend(&linkedList, line);
     } while (fgets(buff, sizeof(buff), fp));
-
 
     fclose(fp);
     return linkedList;
 }
 
+void readFromCSVHelper(char **input_cursor, wchar_t *dest, size_t const destSize) {
+    char const *token = strtok(*input_cursor, ",");
+
+    *input_cursor = NULL;
+
+    if (token) {
+        mbstowcs(dest, token, destSize - 1);
+        dest[destSize - 1] = L'\0';
+    }
+}
 
 char *readPath(void) {
+    fflush(stdout);
+
     size_t size = 128;
     size_t len = 0;
     char *buff = (char *) malloc(size);
@@ -222,69 +144,22 @@ Alkalmazott *readFromInput(void) {
     memset(uj->munka_adatok, 0, sizeof(MunkaAdat));
     memset(uj->penzugyi_adatok, 0, sizeof(PenzugyiAdat));
 
-    readFromInputHelper(L"ID: ",
-        uj->szemelyes_adatok->id,
-        sizeof(uj->szemelyes_adatok->id)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Név: ",
-        uj->szemelyes_adatok->nev,
-        sizeof(uj->szemelyes_adatok->nev)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Születési dátum: ",
-    uj->szemelyes_adatok->szul_datum,
-    sizeof(uj->szemelyes_adatok->szul_datum)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Nem: ",
-    uj->szemelyes_adatok->nem,
-    sizeof(uj->szemelyes_adatok->nem)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Lakhely: ",
-    uj->szemelyes_adatok->lakhely,
-    sizeof(uj->szemelyes_adatok->lakhely)/sizeof(wchar_t));
-
-    readFromInputHelper(L"E-Mail: ",
-    uj->szemelyes_adatok->email,
-    sizeof(uj->szemelyes_adatok->email)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Telefon: ",
-    uj->szemelyes_adatok->telefon,
-    sizeof(uj->szemelyes_adatok->telefon)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Személyi szám: ",
-    uj->szemelyes_adatok->szemelyi_szam,
-    sizeof(uj->szemelyes_adatok->szemelyi_szam)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Beosztás: ",
-    uj->munka_adatok->beosztas,
-    sizeof(uj->munka_adatok->beosztas)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Részleg: ",
-    uj->munka_adatok->reszleg,
-    sizeof(uj->munka_adatok->reszleg)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Felettes: ",
-    uj->munka_adatok->felettes,
-    sizeof(uj->munka_adatok->felettes)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Munkakezdet: ",
-    uj->munka_adatok->munkakezdet,
-    sizeof(uj->munka_adatok->munkakezdet)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Munka vége: ",
-    uj->munka_adatok->munkavege,
-    sizeof(uj->munka_adatok->munkavege)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Munkarend: ",
-    uj->munka_adatok->munkarend,
-    sizeof(uj->munka_adatok->munkarend)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Bankszámlaszám: ",
-    uj->penzugyi_adatok->bankszamla,
-    sizeof(uj->penzugyi_adatok->bankszamla)/sizeof(wchar_t));
-
-    readFromInputHelper(L"Fizetés: ",
-    uj->penzugyi_adatok->fizetes,
-    sizeof(uj->penzugyi_adatok->fizetes)/sizeof(wchar_t));
+    READ_INPUT(L"ID: ", uj->szemelyes_adatok->id);
+    READ_INPUT(L"Név: ", uj->szemelyes_adatok->nev);
+    READ_INPUT(L"Születési dátum: ", uj->szemelyes_adatok->szul_datum);
+    READ_INPUT(L"Nem: ", uj->szemelyes_adatok->nev);
+    READ_INPUT(L"Lakhely: ", uj->szemelyes_adatok->lakhely);
+    READ_INPUT(L"E-Mail: ", uj->szemelyes_adatok->email);
+    READ_INPUT(L"Telefon: ", uj->szemelyes_adatok->telefon);
+    READ_INPUT(L"Személyi szám: ", uj->szemelyes_adatok->szemelyi_szam);
+    READ_INPUT(L"Beosztás: ", uj->munka_adatok->beosztas);
+    READ_INPUT(L"Részleg: ", uj->munka_adatok->reszleg);
+    READ_INPUT(L"Felettes: ", uj->munka_adatok->felettes);
+    READ_INPUT(L"Munkakezdet: ", uj->munka_adatok->munkakezdet);
+    READ_INPUT(L"Munka vége: ", uj->munka_adatok->munkavege);
+    READ_INPUT(L"Munkarend: ", uj->munka_adatok->munkarend);
+    READ_INPUT(L"Bankszámlaszám: ", uj->penzugyi_adatok->bankszamla);
+    READ_INPUT(L"Fizetés: ", uj->penzugyi_adatok->fizetes);
 
     return uj;
 }
