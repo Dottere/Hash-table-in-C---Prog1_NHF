@@ -7,7 +7,7 @@
 #include <threads.h>
 
 
-HashTable *htcreate(int initSize) {
+HashTable *htcreate(int const initSize) {
     HashTable *ht = (HashTable*) malloc(sizeof(HashTable));
 
     if (!ht) {
@@ -96,7 +96,7 @@ void printHashTable(HashTable const *ht) {
     for (size_t i = 0; i < ht->size; i++) {
         if (ht->buckets[i] != NULL) {
             wprintf(L"Bucket[%zu]: ", i);
-            Alkalmazott *iter = ht->buckets[i];
+            Alkalmazott const *iter = ht->buckets[i];
             int count = 0;
             while (iter) {
                 if (count > 0) wprintf(L" -> ");
@@ -114,25 +114,20 @@ void printHashTable(HashTable const *ht) {
 void htfree(HashTable *ht) {
     if (!ht) return;
 
-    // Minden bucket bejárása
     for (size_t i = 0; i < ht->size; i++) {
         Alkalmazott *current = ht->buckets[i];
 
-        // Láncolt lista felszabadítása a bucket-ben
         while (current) {
             Alkalmazott *next = current->kov;
 
-            // Belső struktúrák felszabadítása
             freeNode(current);
 
             current = next;
         }
     }
 
-    // Buckets tömb felszabadítása
     free(ht->buckets);
 
-    // HashTable felszabadítása
     free(ht);
 }
 
