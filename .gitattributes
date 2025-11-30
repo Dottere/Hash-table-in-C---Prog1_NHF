@@ -1,1 +1,3 @@
-html/* linguist-generated=true
+html/*.html linguist-generated=true
+html/*.js linguist-generated=true
+html/*.css linguist-generated=true
