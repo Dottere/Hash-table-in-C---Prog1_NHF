@@ -4,6 +4,7 @@
 
 #include "headers/utils.h"
 
+
 void printHelp(void) {
     wprintf(L"A program mely funkcionalitását szeretnéd használni?\n");
     wprintf(L"0. Kiírja újra ezt a segítséget.\n");
@@ -15,6 +16,7 @@ void printHelp(void) {
     wprintf(L"6. Kiírás CSV fájlba.\n");
     wprintf(L"7. Kilép.\n");
 }
+
 
 int readingFromFile(HashTable **ht, char **path) {
     wprintf(L"A beolvasást választottad! Kérlek add meg a beolvasandó fájl elérési útvonalát: ");
@@ -60,6 +62,7 @@ int readingFromFile(HashTable **ht, char **path) {
     return 0;
 }
 
+
 void searchInHashTable(HashTable **ht) {
     Alkalmazott *target = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
     target->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
@@ -74,13 +77,13 @@ void searchInHashTable(HashTable **ht) {
     readFromInputHelper(L"E-Mail:", target->szemelyes_adatok->email, 64);
     readFromInputHelper(L"Születési dátum:", target->szemelyes_adatok->szul_datum, 24);
 
-    if (!htfind(*ht, target)) {
-        wprintf(L"A keresett személy nem található meg a listában!");
-    }
+    htfind(*ht, target);
+
 
     free(target->szemelyes_adatok);
     free(target);
 }
+
 
 void statistics(HashTable const *ht) {
     wprintf(L"\nÜtközés statisztika:\n");
@@ -107,6 +110,7 @@ void statistics(HashTable const *ht) {
     wprintf(L"\nTeszt befejezve!\n");
 }
 
+
 bool confirmOverwrite(const char *path) {
     char choice[16];
     while (true) {
@@ -119,6 +123,7 @@ bool confirmOverwrite(const char *path) {
         wprintf(L"Érvénytelen választás.\n");
     }
 }
+
 
 void howToModify(HashTable *ht, char const *path) {
     char choice[16];
@@ -145,6 +150,7 @@ void howToModify(HashTable *ht, char const *path) {
         }
     }
 }
+
 
 void addLogic(HashTable *ht, char const *path, char *choice) {
     wprintf(L"Hány elemet szeretnél hozzáadni?\n1.Egyet manuálisan\n2.Többet fájlból\n3.Mégsem\nVálasztás: ");
@@ -199,6 +205,7 @@ void addLogic(HashTable *ht, char const *path, char *choice) {
     }
 }
 
+
 void delLogic(HashTable *ht) {
     Alkalmazott *dummy = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
     dummy->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
@@ -219,6 +226,7 @@ void delLogic(HashTable *ht) {
     free(dummy);
 }
 
+
 void updateLogic(HashTable *ht, char *choice) {
     Alkalmazott *dummy = (Alkalmazott*) calloc(1, sizeof(Alkalmazott));
     dummy->szemelyes_adatok = (SzemelyesAdat*) calloc(1, sizeof(SzemelyesAdat));
@@ -229,9 +237,8 @@ void updateLogic(HashTable *ht, char *choice) {
     readFromInputHelper(L"E-Mail: ", dummy->szemelyes_adatok->email, 64);
     readFromInputHelper(L"Születési dátum: ", dummy->szemelyes_adatok->szul_datum, 24);
 
-    if (!htfind(ht, dummy)) { // Use htfind directly
+    if (!htfind(ht, dummy)) {
         freeNode(dummy);
-        wprintf(L"A keresett személy nem található!");
         return;
     }
 
@@ -261,6 +268,7 @@ void updateLogic(HashTable *ht, char *choice) {
 
     freeNode(dummy);
 }
+
 
 void writeToFile(HashTable **ht) {
     wprintf(L"Add meg a célfájl elérési útját! (pl export.csv): ");

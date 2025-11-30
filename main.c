@@ -7,9 +7,7 @@
 #include <wchar.h>
 
 #include "headers/debugmalloc.h"
-//#include "headers/ht.h"
 #include "headers/fnv1a.h"
-// #include "headers/datastructs.h"
 #include "headers/ht.h"
 #include "headers/io.h"
 #include "headers/linkedlist.h"

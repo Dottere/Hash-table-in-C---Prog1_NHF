@@ -5,13 +5,13 @@
 #include "headers/io.h"
 
 
-// debug
+
 int printFromCSV(char const *filePath) {
     FILE *fp = fopen(filePath, "rb");
 
     if (fp == NULL) {
         perror("Failed to open file");
-        return 1;
+        return -1;
     }
 
     char buffer[256];
@@ -23,6 +23,7 @@ int printFromCSV(char const *filePath) {
     fclose(fp);
     return 0;
 }
+
 
 Alkalmazott *readFromCSV(char const *filePath) {
     FILE *fp = fopen(filePath, "r");
@@ -162,6 +163,7 @@ Alkalmazott *readFromCSV(char const *filePath) {
     return linkedList;
 }
 
+
 char *readPath(void) {
     size_t size = 128;
     size_t len = 0;
@@ -185,6 +187,7 @@ char *readPath(void) {
     return buff;
 }
 
+
 bool pathExists(const char *path) {
     FILE *file = fopen(path, "r");
     if (file) {
@@ -193,6 +196,7 @@ bool pathExists(const char *path) {
     }
     return false;
 }
+
 
 Alkalmazott *readFromInput(void) {
     wprintf(L"\n--- Új alkalmazott felvétele ---\n");
@@ -285,24 +289,23 @@ Alkalmazott *readFromInput(void) {
     return uj;
 }
 
+
 void readFromInputHelper(const wchar_t *prompt, wchar_t *dest, size_t destSize) {
-    char buff[256]; // Lokális buffer, nem kell átadni kívülről
+    char buff[256];
 
     wprintf(L"%ls", prompt);
     fflush(stdout);
 
     if (fgets(buff, sizeof(buff), stdin) != NULL) {
-        // Enter levágása
+
         buff[strcspn(buff, "\n")] = '\0';
 
-        // Konvertálás a célterületre
-        // A destSize-t kívülről kapjuk, mert pointeren a sizeof() nem működik!
         mbstowcs(dest, buff, destSize - 1);
 
-        // Biztonsági lezárás, ha a mbstowcs esetleg pont teleírta volna
         dest[destSize - 1] = L'\0';
     }
 }
+
 
 int writeToCSV(HashTable *ht, char const *path) {
     if (!ht || !path) return -1;
@@ -321,7 +324,7 @@ int writeToCSV(HashTable *ht, char const *path) {
                 "Bankszamla,Fizetes\n");
 
     for (size_t i = 0; i < ht->size; i++) {
-        Alkalmazott *current = ht->buckets[i];
+        Alkalmazott const *current = ht->buckets[i];
 
         while (current != NULL) {
             if (current->szemelyes_adatok && current->munka_adatok && current->penzugyi_adatok) {
@@ -343,7 +346,7 @@ int writeToCSV(HashTable *ht, char const *path) {
                 printField(fp, current->munka_adatok->munkarend, ",");
 
                 printField(fp, current->penzugyi_adatok->bankszamla, ",");
-                // Note: The last one uses "\n" instead of ","
+
                 printField(fp, current->penzugyi_adatok->fizetes, "\n");
             }
             current = current->kov;
@@ -353,17 +356,16 @@ int writeToCSV(HashTable *ht, char const *path) {
     return 0;
 }
 
+
 void printField(FILE *fp, wchar_t *str, char *suffix) {
     if (!str) {
         fprintf(fp, "%s", suffix);
         return;
     }
 
-    // Get the length needed for conversion
-    size_t len = wcstombs(NULL, str, 0);
+    size_t const len = wcstombs(NULL, str, 0);
     if (len == (size_t)-1) return;
 
-    // Allocate memory, convert, print, and free
     char *buffer = (char *)malloc(len + 1);
     if (buffer) {
         wcstombs(buffer, str, len + 1);

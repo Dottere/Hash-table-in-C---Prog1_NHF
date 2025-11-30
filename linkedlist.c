@@ -17,6 +17,7 @@ Alkalmazott *linkedListNodeCreate(SzemelyesAdat *sz, MunkaAdat *m, PenzugyiAdat 
     return newElement;
 }
 
+
 Alkalmazott *linkedListInit(Alkalmazott *alkalmazott) {
     alkalmazott->szemelyes_adatok = NULL;
     alkalmazott->munka_adatok = NULL;
@@ -25,6 +26,7 @@ Alkalmazott *linkedListInit(Alkalmazott *alkalmazott) {
 
     return alkalmazott;
 }
+
 
 void linkedListAppend(Alkalmazott **head, Alkalmazott *newElement) {
     if (head == NULL || newElement == NULL) {
@@ -46,6 +48,7 @@ void linkedListAppend(Alkalmazott **head, Alkalmazott *newElement) {
     newElement->kov = NULL;
 }
 
+
 void linkedListRemove(Alkalmazott **head, Alkalmazott *element) {
     if (!head || !*head || !element) return;
 
@@ -66,6 +69,7 @@ void linkedListRemove(Alkalmazott **head, Alkalmazott *element) {
     }
 }
 
+
 void freeNode(Alkalmazott *node) {
     if (!node) return;
     free(node->szemelyes_adatok);
@@ -73,6 +77,7 @@ void freeNode(Alkalmazott *node) {
     free(node->penzugyi_adatok);
     free(node);
 }
+
 
 void linkedListFree(Alkalmazott **head) {
     if (!head || !*head) return;
@@ -85,6 +90,7 @@ void linkedListFree(Alkalmazott **head) {
     }
     *head = NULL;
 }
+
 
 void linkedListPrint(Alkalmazott **head) {
     Alkalmazott *iter = *head;
@@ -101,6 +107,7 @@ void linkedListPrint(Alkalmazott **head) {
         iter = iter->kov;
     }
 }
+
 
 int linkedListLen(Alkalmazott **head) {
     int cnt = 0;
