@@ -1,0 +1,58 @@
+\doxysection{headers/fnv1a.h File Reference}
+\hypertarget{fnv1a_8h}{}\label{fnv1a_8h}\index{headers/fnv1a.h@{headers/fnv1a.h}}
+{\ttfamily \#include "{}debugmalloc.\+h"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{fnv1a_8h_a5e5179f2a5575dc066581d3072174da3}{FNV\+\_\+\+OFFSET}}~2166136261u
+\item 
+\#define \mbox{\hyperlink{fnv1a_8h_ad24caffb4ec2b57caeb823da822d3120}{FNV\+\_\+\+PRIME}}~16777619u
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{fnv1a_8h_aa0054be1d4b64da6a4058ad2413af831}{FNV1a}} (const wchar\+\_\+t \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em Generál egy 32 bites számot a bekért sztringből. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{fnv1a_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{fnv1a_8h_a5e5179f2a5575dc066581d3072174da3}\index{fnv1a.h@{fnv1a.h}!FNV\_OFFSET@{FNV\_OFFSET}}
+\index{FNV\_OFFSET@{FNV\_OFFSET}!fnv1a.h@{fnv1a.h}}
+\doxysubsubsection{\texorpdfstring{FNV\_OFFSET}{FNV\_OFFSET}}
+{\footnotesize\ttfamily \label{fnv1a_8h_a5e5179f2a5575dc066581d3072174da3} 
+\#define FNV\+\_\+\+OFFSET~2166136261u}
+
+\Hypertarget{fnv1a_8h_ad24caffb4ec2b57caeb823da822d3120}\index{fnv1a.h@{fnv1a.h}!FNV\_PRIME@{FNV\_PRIME}}
+\index{FNV\_PRIME@{FNV\_PRIME}!fnv1a.h@{fnv1a.h}}
+\doxysubsubsection{\texorpdfstring{FNV\_PRIME}{FNV\_PRIME}}
+{\footnotesize\ttfamily \label{fnv1a_8h_ad24caffb4ec2b57caeb823da822d3120} 
+\#define FNV\+\_\+\+PRIME~16777619u}
+
+
+
+\label{doc-func-members}
+\Hypertarget{fnv1a_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{fnv1a_8h_aa0054be1d4b64da6a4058ad2413af831}\index{fnv1a.h@{fnv1a.h}!FNV1a@{FNV1a}}
+\index{FNV1a@{FNV1a}!fnv1a.h@{fnv1a.h}}
+\doxysubsubsection{\texorpdfstring{FNV1a()}{FNV1a()}}
+{\footnotesize\ttfamily \label{fnv1a_8h_aa0054be1d4b64da6a4058ad2413af831} 
+uint32\+\_\+t FNV1a (\begin{DoxyParamCaption}\item[{const wchar\+\_\+t \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})}
+
+
+
+Generál egy 32 bites számot a bekért sztringből. 
+
+A bekért wchar\+\_\+t karakterekből álló sztringet először átkonvertálja UTF-\/8 kompatibilis multibájt karakterekből álló sztringgé, majd azt bájtonként feldolgozza. Két konstanssal dolgozik, egy FNV offset és egy FNV prím értékkel. Első lépésként a kimenetet beállítja az offset értékére, majd minden a bekért szöveg minden bájtjával azt először XOR-\/olja majd beszorozza a prímmel. A végső érték egy 32 bites szám lesz amelyet visszaad a program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & Ez egy pointer azokra a wchar\+\_\+t karakterekből álló sztringre amelyből a hash készül.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Bemenettől függetlenül mindig egy uint32\+\_\+t típusú 32 bites számot ad vissza. 
+\end{DoxyReturn}

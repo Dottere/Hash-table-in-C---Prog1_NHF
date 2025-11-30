@@ -1,0 +1,54 @@
+\doxysection{datastructs.\+h}
+\hypertarget{datastructs_8h_source}{}\label{datastructs_8h_source}\index{headers/datastructs.h@{headers/datastructs.h}}
+\mbox{\hyperlink{datastructs_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ lin\ on\ 11/7/25.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ PROGRAMMING1\_NAGYHF\_DATASTRUCTS\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ PROGRAMMING1\_NAGYHF\_DATASTRUCTS\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \textcolor{keywordtype}{id}[16];}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_a50c1a7a8eea55510aee44df9063aa0cb}{nev}}[64];}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_afcd438b4f9c9bf955ad8d34d3188396b}{szul\_datum}}[24];\ \textcolor{comment}{//\ (YYYY-\/MM-\/DD)}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_a24e7ed642f889ef4ce909700a9e06cf5}{nem}}[16];}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_ad6a2a2c11536716f5674b5640c0acf6e}{lakhely}}[64];}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_ae083dc5c1d55bd76780546f6302b38fa}{email}}[64];}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_ab349939dbf87646bc00dd88ff891a26b}{telefon}}[20];}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structSzemelyesAdat_a7d069b6320869aed7d675eeaf79d0ff2}{szemelyi\_szam}}[16];}
+\DoxyCodeLine{00020\ \}\ \mbox{\hyperlink{structSzemelyesAdat}{SzemelyesAdat}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_abab7b34aaa3e115f6e27cde7d390e0dc}{beosztas}}[64];}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_a0e27b3b7bb9c204f1526d754c6fcbc95}{reszleg}}[64];}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_a2384fbf1ddfe64e45d09bdc51c79b7e2}{felettes}}[64];}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_afaf3a2a948796ce943b4ce953c0c8555}{munkakezdet}}[24];}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_ad2eb6e1ece820eca4fc37f2c298f18d3}{munkavege}}[24];}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structMunkaAdat_a34d8981aad660be358932c12caf8f382}{munkarend}}[32];}
+\DoxyCodeLine{00029\ \}\ \mbox{\hyperlink{structMunkaAdat}{MunkaAdat}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structPenzugyiAdat_ad2f906cea71f6e3492ab7ef1ee5d6cc6}{bankszamla}}[128];}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{wchar\_t}\ \mbox{\hyperlink{structPenzugyiAdat_a0fcb1447c6f6160972e3af718da60b04}{fizetes}}[32];}
+\DoxyCodeLine{00034\ \}\ \mbox{\hyperlink{structPenzugyiAdat}{PenzugyiAdat}};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structAlkalmazott}{Alkalmazott}}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{structSzemelyesAdat}{SzemelyesAdat}}\ *\mbox{\hyperlink{structAlkalmazott_a2259d682f208613de9f883cfcab37006}{szemelyes\_adatok}};}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{structMunkaAdat}{MunkaAdat}}\ *\mbox{\hyperlink{structAlkalmazott_acd866b1a26745266045803ba4a86b365}{munka\_adatok}};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{structPenzugyiAdat}{PenzugyiAdat}}\ *\mbox{\hyperlink{structAlkalmazott_a2c85332e37d2eddcc75d9402e68a2e32}{penzugyi\_adatok}};}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structAlkalmazott}{Alkalmazott}}\ *\mbox{\hyperlink{structAlkalmazott_af0256915d4d23a536d84db632fa2a764}{kov}};\ \textcolor{comment}{//\ láncolt\ lista\ miatt}}
+\DoxyCodeLine{00041\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structAlkalmazott_a6654e7096edf0294eba242e254a42aaf}{storedHash}};}
+\DoxyCodeLine{00042\ \}\ \mbox{\hyperlink{structAlkalmazott}{Alkalmazott}};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structHashTable}{HashTable}}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{structAlkalmazott}{Alkalmazott}}\ **\mbox{\hyperlink{structHashTable_a3b61992dc7cad393b11001a596b3327d}{buckets}};}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structHashTable_a6e9bc647d561a8e3a178175f0e6d9cc2}{size}};}
+\DoxyCodeLine{00047\ \}\ \mbox{\hyperlink{structHashTable}{HashTable}};}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//PROGRAMMING1\_NAGYHF\_DATASTRUCTS\_H}}
+
+\end{DoxyCode}
